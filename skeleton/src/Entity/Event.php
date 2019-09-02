@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Interfaces\BuyableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
  */
-class Event
+class Event implements BuyableInterface
 {
     /**
      * @ORM\Id()
@@ -165,5 +166,10 @@ class Event
         }
 
         return $this;
+    }
+
+    public function getBuyableName()
+    {
+        return $this->getName();
     }
 }

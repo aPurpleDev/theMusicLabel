@@ -27,7 +27,7 @@ class DataFixtures extends Fixture
         $faker = Faker\Factory::create();
 
         $artistArray = [];
-        $userArray = [];
+        //$userArray = [];
         $albumArray = [];
         $trackArray = [];
         $eventArray = [];
@@ -43,7 +43,7 @@ class DataFixtures extends Fixture
             $user->setLastName($faker->lastName());
 
             $manager->persist($user);
-            $userArray[] = $user;
+            //$userArray[] = $user;
 
             $manager->flush();
         }
@@ -87,7 +87,8 @@ class DataFixtures extends Fixture
             $track->setAlbum($albumArray[$randomer]);
 
             $manager->persist($track);
-            $trackArray[] = $track;
+            //$trackArray[] = $track;
+            $albumArray = null;
         }
 
         for ($i = 0; $i < 500; $i++)
@@ -103,7 +104,6 @@ class DataFixtures extends Fixture
             $event->setCity($faker->city());
 
             $manager->persist($event);
-            $eventArray[] = $event;
 
             $manager->flush();
         }
@@ -119,9 +119,12 @@ class DataFixtures extends Fixture
             $news->setArtist($artistArray[$randomer]);
 
             $manager->persist($news);
-            $newsArray[] = $news;
+            //$newsArray[] = $news;
             $manager->flush();
         }
+
+        $artistArray = null;
+        $albumArray = null;
     }
 
 }
