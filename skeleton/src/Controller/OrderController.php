@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Order;
+use App\Entity\Orders;
 use App\Form\OrderType;
 use App\Repository\OrderRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,7 +30,7 @@ class OrderController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $order = new Order();
+        $order = new Orders();
         $form = $this->createForm(OrderType::class, $order);
         $form->handleRequest($request);
 
@@ -51,7 +51,7 @@ class OrderController extends AbstractController
     /**
      * @Route("/{id}", name="order_show", methods={"GET"})
      */
-    public function show(Order $order): Response
+    public function show(Orders $order): Response
     {
         return $this->render('order/show.html.twig', [
             'order' => $order,
@@ -61,7 +61,7 @@ class OrderController extends AbstractController
     /**
      * @Route("/{id}/edit", name="order_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Order $order): Response
+    public function edit(Request $request, Orders $order): Response
     {
         $form = $this->createForm(OrderType::class, $order);
         $form->handleRequest($request);
@@ -81,7 +81,7 @@ class OrderController extends AbstractController
     /**
      * @Route("/{id}", name="order_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, Order $order): Response
+    public function delete(Request $request, Orders $order): Response
     {
         if ($this->isCsrfTokenValid('delete'.$order->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();

@@ -4,7 +4,6 @@ namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use Faker;
 
 use App\Entity\User;
@@ -29,8 +28,8 @@ class DataFixtures extends Fixture
 
         $user->setEmail($faker->email());
         $user->setPassword(rand(1,100000000));
-        $user->setRoles('ROLE_USER');
-        $user->setFirstName($faker->firstName($gender = null|'male'|'female'));
+        $user->setRoles(['ROLE_USER']);
+        $user->setFirstName($faker->firstName($gender = null));
         $user->setLastName($faker->lastName());
 
         $manager->persist($user);
