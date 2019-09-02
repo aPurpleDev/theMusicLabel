@@ -38,6 +38,11 @@ class Order
      */
     private $orderLogs;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="orders")
+     */
+    private $User;
+
     public function __construct()
     {
         $this->orderLogs = new ArrayCollection();
@@ -111,6 +116,18 @@ class Order
                 $orderLog->setOrdernumber(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->User;
+    }
+
+    public function setUser(?User $User): self
+    {
+        $this->User = $User;
 
         return $this;
     }
