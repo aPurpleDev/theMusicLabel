@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class RegistrationController extends AbstractController
 {
@@ -36,8 +37,8 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             // do anything else you need here, like send an email
-            $e = new RegisterEvent($user);
-            $dispatcher->dispatch($e, RegisterEvent::NAME);
+//            $e = new RegisterEvent($user);
+//            $dispatcher->dispatch($e, RegisterEvent::NAME);
 
             return $this->redirectToRoute('app_login');
         }
