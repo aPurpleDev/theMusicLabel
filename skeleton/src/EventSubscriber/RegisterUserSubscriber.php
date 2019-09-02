@@ -2,6 +2,7 @@
 
 namespace App\EventSubscriber;
 
+use App\Event\OrderEvent;
 use App\Event\RegisterEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -38,6 +39,9 @@ class RegisterUserSubscriber implements EventSubscriberInterface
         return [
             RegisterEvent::NAME => [
                 'sendMailToUser', -10
+            ],
+            OrderEvent::NAME => [
+                'sendMailOnNewOrder', -10
             ]
         ];
     }
