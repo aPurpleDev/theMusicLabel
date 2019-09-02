@@ -2,28 +2,34 @@
 
 {% block body %}
 
-    <h2 class = "bg-success text-center">Welcome to the MusicLabel</h2>
+    <h2 class="bg-success text-center">Welcome to the MusicLabel</h2>
+    {% if app.user == false %}
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-success text-center"</h2>Connect
+            </div>
+            <div class="card-body text-center">
+                <h5 class="card-title">Connect to your account and plug into your favorite Artists</h5>
+                <p class="card-text">Top prices for Albums and Events</p>
+                <a href="{{ path('app_login') }}" class="btn btn-primary align-center">LOGIN</a>
+            </div>
+        </div>
 
-    <div class="card">
-        <div class="card-header">
-            <h2 class = "text-success text-center"</h2>Connect
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-success text-center"</h2>Register
+            </div>
+            <div class="card-body text-center">
+                <h5 class="card-title">Join millions WorldWide in the newest Music Hub</h5>
+                <p class="card-text">Partake in the Musical fun</p>
+                <a href="{{ path('app_register') }}" class="btn btn-primary align-center">REGISTER</a>
+            </div>
         </div>
-        <div class="card-body text-center">
-            <h5 class="card-title">Connect to your account and plug into your favorite Artists</h5>
-            <p class="card-text">Top prices for Albums and Events</p>
-            <a href="{{ path('app_login') }}" class="btn btn-primary align-center">LOGIN</a>
-        </div>
-    </div>
+    {% endif %}
 
-    <div class="card">
-        <div class="card-header">
-            <h2 class = "text-success text-center"</h2>Register
-        </div>
-        <div class="card-body text-center">
-            <h5 class="card-title">Join millions WorldWide in the newest Music Hub</h5>
-            <p class="card-text">Partake in the Musical fun</p>
-            <a href="{{ path('app_register') }}" class="btn btn-primary align-center">REGISTER</a>
-        </div>
-    </div>
+    {% if app.user %}
+        <h1 class = "bg-info text-center">Greetings {{ app.user.firstname }}</h1>
+        <p1 class = "text-danger">TBC what this section will show</p1>
+    {% endif %}
 
 {% endblock %}

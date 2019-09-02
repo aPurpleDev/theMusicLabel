@@ -40,7 +40,25 @@
                 <li class="nav-item">
                 <a class="nav-link" href="{{ path('order_index') }}">Orders</a>
             </li>
-                {% endif %}
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    Account
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ path('order_index') }}">Orders (to change)</a>
+                    <a class="dropdown-item" href="{{ path('news_index') }}">News and Events (to change)</a>
+                    <a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a>
+                </div>
+                <div class="dropdown-divider"></div>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('order_index') }}">Orders</a>
+            </li>
+            {% endif %}
+
+
+
             {% if is_granted('ROLE_ADMIN') %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('user_index') }}">User Administration</a>
