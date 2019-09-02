@@ -195,18 +195,24 @@ class User implements UserInterface
     {
         $buyable->getBuyableName();
         $buyable->getPrice();
-        
+
         $orderlog = new OrderLog();
+        $order;
 
         if($buyable instanceof Event)
         {
             $orderlog->setEvent($buyable);
+            $orderlog->setOrdernumber($buyable->getId());
+            $order = new Orders();
+            $order->setOrderNumber($orderlog->getId());
         }
         if($buyable instanceof Album)
         {
             $orderlog->setAlbum($buyable);
+            $orderlog->setOrdernumber($buyable->getId());
+            $order = new Orders();
+            $order->setOrderNumber($orderlog->getId());
         }
-
-        return $orderlog;
+        return $order;
     }
 }
