@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New OrderLog{% endblock %}
+
+{% block body %}
+    <h1>Create new OrderLog</h1>
+
+    {{ include('order_log/_form.html.twig') }}
+
+    <a href="{{ path('order_log_index') }}">back to list</a>
+{% endblock %}
