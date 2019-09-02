@@ -19,27 +19,34 @@ class RegisterUserSubscriber implements EventSubscriberInterface
         $this->mailer = $mailer;
     }
 
-    public function sendMailToNewlyRegisteredUser()
+    public function sendMailToNewlyRegisteredUser($user)
     {
-        $a = (new \Swift_Message('Hello'))
-            ->setFrom('ok@test.fr')
+        $a = (new \Swift_Message('Hello '.$user['name']))
+            ->setFrom('themusic@label.com')
+//            ->setTo('$user['email']')
             ->setTo('14a0577f61-54f64c@inbox.mailtrap.io')
-            ->setBody('Here is the message itself');
+            ->setBody('Welcome to theMusicLabel Corp, We are pleased to have you joining us, I hope you will enjoy & listen to every tracks available. Greetings.');
 
         $this->mailer->send($a);
     }
 
     public function sendMailOnNewOrder()
     {
+        $a = (new \Swift_Message('Hello '.$user['name']))
+            ->setFrom('themusic@label.com')
+//            ->setTo('$user['email']')
+            ->setTo('14a0577f61-54f64c@inbox.mailtrap.io')
+            ->setBody('Welcome to theMusicLabel Corp, We are pleased to have you joining us, I hope you will enjoy & listen to every tracks available. Greetings.');
 
+        $this->mailer->send($a);
     }
 
     public static function getSubscribedEvents()
     {
         return [
-            RegisterEvent::NAME => [
-                'sendMailToUser', -10
-            ],
+//            RegisterEvent::NAME => [
+//                'sendMailToNewlyRegisteredUser', -10
+//            ],
             OrderEvent::NAME => [
                 'sendMailOnNewOrder', -10
             ]

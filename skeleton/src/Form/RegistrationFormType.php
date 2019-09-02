@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -36,6 +38,11 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('roles', CollectionType::class, [
+                'entry_type' => HiddenType::class,
+                'entry_options' => [
+                    'data' => 'ROLE_USER'
+                ]])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [

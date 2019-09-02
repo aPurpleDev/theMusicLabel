@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Event\RegisterEvent;
+use App\EventListener\RegisterListener;
 use App\Form\RegistrationFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,11 +18,13 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, EventDispatcherInterface $dispatcher): Response
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, RegisterListener $listener, EventDispatcherInterface $dispatcher): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
+
+        $dispatcher->addListener(RegisterEvent::NAME, [$listener, 'sendMailToUser']);
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
@@ -37,8 +40,8 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             // do anything else you need here, like send an email
-//            $e = new RegisterEvent($user);
-//            $dispatcher->dispatch($e, RegisterEvent::NAME);
+            $e = new RegisterEvent($user);
+            $dispatcher->dispatch($e, RegisterEvent::NAME);
 
             return $this->redirectToRoute('app_login');
         }

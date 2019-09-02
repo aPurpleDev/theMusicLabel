@@ -13,10 +13,10 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/order")
  */
-class OrderController extends AbstractController
+class OrdersController extends AbstractController
 {
     /**
-     * @Route("/", name="order_index", methods={"GET"})
+     * @Route("/", name="orders_index", methods={"GET"})
      */
     public function index(OrderRepository $orderRepository): Response
     {
@@ -26,7 +26,7 @@ class OrderController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="order_new", methods={"GET","POST"})
+     * @Route("/new", name="orders_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -49,7 +49,7 @@ class OrderController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="order_show", methods={"GET"})
+     * @Route("/{id}", name="orders_show", methods={"GET"})
      */
     public function show(Orders $order): Response
     {
@@ -59,7 +59,7 @@ class OrderController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="order_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="orders_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Orders $order): Response
     {
@@ -79,7 +79,7 @@ class OrderController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="order_delete", methods={"DELETE"})
+     * @Route("/{id}", name="orders_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Orders $order): Response
     {
