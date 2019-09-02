@@ -44,9 +44,15 @@ class Album
      */
     private $artist;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\OrderLog", mappedBy="album")
+     */
+    private $orderLogs;
+
     public function __construct()
     {
         $this->tracks = new ArrayCollection();
+        $this->orderLogs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -129,6 +135,37 @@ class Album
     public function setArtist(?Artist $artist): self
     {
         $this->artist = $artist;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OrderLog[]
+     */
+    public function getOrderLogs(): Collection
+    {
+        return $this->orderLogs;
+    }
+
+    public function addOrderLog(OrderLog $orderLog): self
+    {
+        if (!$this->orderLogs->contains($orderLog)) {
+            $this->orderLogs[] = $orderLog;
+            $orderLog->setAlbum($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderLog(OrderLog $orderLog): self
+    {
+        if ($this->orderLogs->contains($orderLog)) {
+            $this->orderLogs->removeElement($orderLog);
+            // set the owning side to null (unless already changed)
+            if ($orderLog->getAlbum() === $this) {
+                $orderLog->setAlbum(null);
+            }
+        }
 
         return $this;
     }

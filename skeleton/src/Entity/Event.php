@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -46,6 +48,16 @@ class Event
      * @ORM\JoinColumn(nullable=false)
      */
     private $artist;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\OrderLog", mappedBy="event")
+     */
+    private $orderLogs;
+
+    public function __construct()
+    {
+        $this->orderLogs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -120,6 +132,37 @@ class Event
     public function setArtist(?Artist $artist): self
     {
         $this->artist = $artist;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OrderLog[]
+     */
+    public function getOrderLogs(): Collection
+    {
+        return $this->orderLogs;
+    }
+
+    public function addOrderLog(OrderLog $orderLog): self
+    {
+        if (!$this->orderLogs->contains($orderLog)) {
+            $this->orderLogs[] = $orderLog;
+            $orderLog->setEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderLog(OrderLog $orderLog): self
+    {
+        if ($this->orderLogs->contains($orderLog)) {
+            $this->orderLogs->removeElement($orderLog);
+            // set the owning side to null (unless already changed)
+            if ($orderLog->getEvent() === $this) {
+                $orderLog->setEvent(null);
+            }
+        }
 
         return $this;
     }

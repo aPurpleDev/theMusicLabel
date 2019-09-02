@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\OrderRepository")
  */
-classOrder
+class Order
 {
     /**
      * @ORM\Id()
@@ -30,6 +32,16 @@ classOrder
      * @ORM\Column(type="float")
      */
     private $totalPrice;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\OrderLog", mappedBy="ordernumber")
+     */
+    private $orderLogs;
+
+    public function __construct()
+    {
+        $this->orderLogs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -68,6 +80,37 @@ classOrder
     public function setTotalPrice(float $totalPrice): self
     {
         $this->totalPrice = $totalPrice;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OrderLog[]
+     */
+    public function getOrderLogs(): Collection
+    {
+        return $this->orderLogs;
+    }
+
+    public function addOrderLog(OrderLog $orderLog): self
+    {
+        if (!$this->orderLogs->contains($orderLog)) {
+            $this->orderLogs[] = $orderLog;
+            $orderLog->setOrdernumber($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderLog(OrderLog $orderLog): self
+    {
+        if ($this->orderLogs->contains($orderLog)) {
+            $this->orderLogs->removeElement($orderLog);
+            // set the owning side to null (unless already changed)
+            if ($orderLog->getOrdernumber() === $this) {
+                $orderLog->setOrdernumber(null);
+            }
+        }
 
         return $this;
     }
