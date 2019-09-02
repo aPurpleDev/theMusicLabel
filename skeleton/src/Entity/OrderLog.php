@@ -27,7 +27,7 @@ class OrderLog
     private $album;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="orderLogs")
+     * @ORM\ManyToOne(targetEntity="Orders", inversedBy="orderLogs")
      */
     private $ordernumber;
 
@@ -60,12 +60,12 @@ class OrderLog
         return $this;
     }
 
-    public function getOrdernumber(): ?Order
+    public function getOrdernumber(): ?Orders
     {
         return $this->ordernumber;
     }
 
-    public function setOrdernumber(?Order $ordernumber): self
+    public function setOrdernumber(?Orders $ordernumber): self
     {
         $this->ordernumber = $ordernumber;
 
