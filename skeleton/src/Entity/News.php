@@ -17,12 +17,12 @@ class News
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=255)
      */
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $content;
 
@@ -32,9 +32,10 @@ class News
     private $publishDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Artist", inversedBy="artist_news_id")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Artist", inversedBy="news")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $news_artist_id;
+    private $artist;
 
     public function getId(): ?int
     {
@@ -58,7 +59,7 @@ class News
         return $this->content;
     }
 
-    public function setContent(?string $content): self
+    public function setContent(string $content): self
     {
         $this->content = $content;
 
@@ -77,14 +78,14 @@ class News
         return $this;
     }
 
-    public function getNewsArtistId(): ?Artist
+    public function getArtist(): ?Artist
     {
-        return $this->news_artist_id;
+        return $this->artist;
     }
 
-    public function setNewsArtistId(?Artist $news_artist_id): self
+    public function setArtist(?Artist $artist): self
     {
-        $this->news_artist_id = $news_artist_id;
+        $this->artist = $artist;
 
         return $this;
     }

@@ -19,12 +19,12 @@ class Album
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=255)
      */
     private $title;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime")
      */
     private $releaseDate;
 
@@ -34,18 +34,19 @@ class Album
     private $price;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Track", mappedBy="track_album_id", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Track", mappedBy="album")
      */
-    private $album_rtrack_id;
+    private $tracks;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Artist", inversedBy="artist_album_id")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Artist", inversedBy="albums")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $album_artist_id;
+    private $artist;
 
     public function __construct()
     {
-        $this->album_rtrack_id = new ArrayCollection();
+        $this->tracks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -70,7 +71,7 @@ class Album
         return $this->releaseDate;
     }
 
-    public function setReleaseDate(?\DateTimeInterface $releaseDate): self
+    public function setReleaseDate(\DateTimeInterface $releaseDate): self
     {
         $this->releaseDate = $releaseDate;
 
@@ -92,42 +93,42 @@ class Album
     /**
      * @return Collection|Track[]
      */
-    public function getAlbumRtrackId(): Collection
+    public function getTracks(): Collection
     {
-        return $this->album_rtrack_id;
+        return $this->tracks;
     }
 
-    public function addAlbumRtrackId(Track $albumRtrackId): self
+    public function addTrack(Track $track): self
     {
-        if (!$this->album_rtrack_id->contains($albumRtrackId)) {
-            $this->album_rtrack_id[] = $albumRtrackId;
-            $albumRtrackId->setTrackAlbumId($this);
+        if (!$this->tracks->contains($track)) {
+            $this->tracks[] = $track;
+            $track->setAlbum($this);
         }
 
         return $this;
     }
 
-    public function removeAlbumRtrackId(Track $albumRtrackId): self
+    public function removeTrack(Track $track): self
     {
-        if ($this->album_rtrack_id->contains($albumRtrackId)) {
-            $this->album_rtrack_id->removeElement($albumRtrackId);
+        if ($this->tracks->contains($track)) {
+            $this->tracks->removeElement($track);
             // set the owning side to null (unless already changed)
-            if ($albumRtrackId->getTrackAlbumId() === $this) {
-                $albumRtrackId->setTrackAlbumId(null);
+            if ($track->getAlbum() === $this) {
+                $track->setAlbum(null);
             }
         }
 
         return $this;
     }
 
-    public function getAlbumArtistId(): ?Artist
+    public function getArtist(): ?Artist
     {
-        return $this->album_artist_id;
+        return $this->artist;
     }
 
-    public function setAlbumArtistId(?Artist $album_artist_id): self
+    public function setArtist(?Artist $artist): self
     {
-        $this->album_artist_id = $album_artist_id;
+        $this->artist = $artist;
 
         return $this;
     }

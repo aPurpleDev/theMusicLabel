@@ -19,7 +19,7 @@ class Artist
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=255)
      */
     private $name;
 
@@ -29,7 +29,7 @@ class Artist
     private $country;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=255)
      */
     private $style;
 
@@ -39,19 +39,25 @@ class Artist
     private $bio;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\News", mappedBy="news_artist_id")
+     * @ORM\OneToMany(targetEntity="App\Entity\Album", mappedBy="artist")
      */
-    private $artist_news_id;
+    private $albums;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Album", mappedBy="album_artist_id")
+     * @ORM\OneToMany(targetEntity="App\Entity\News", mappedBy="artist")
      */
-    private $artist_album_id;
+    private $news;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="artist")
+     */
+    private $events;
 
     public function __construct()
     {
-        $this->artist_news_id = new ArrayCollection();
-        $this->artist_album_id = new ArrayCollection();
+        $this->albums = new ArrayCollection();
+        $this->news = new ArrayCollection();
+        $this->events = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -108,30 +114,30 @@ class Artist
     }
 
     /**
-     * @return Collection|News[]
+     * @return Collection|Album[]
      */
-    public function getArtistNewsId(): Collection
+    public function getAlbums(): Collection
     {
-        return $this->artist_news_id;
+        return $this->albums;
     }
 
-    public function addArtistNewsId(News $artistNewsId): self
+    public function addAlbum(Album $album): self
     {
-        if (!$this->artist_news_id->contains($artistNewsId)) {
-            $this->artist_news_id[] = $artistNewsId;
-            $artistNewsId->setNewsArtistId($this);
+        if (!$this->albums->contains($album)) {
+            $this->albums[] = $album;
+            $album->setArtist($this);
         }
 
         return $this;
     }
 
-    public function removeArtistNewsId(News $artistNewsId): self
+    public function removeAlbum(Album $album): self
     {
-        if ($this->artist_news_id->contains($artistNewsId)) {
-            $this->artist_news_id->removeElement($artistNewsId);
+        if ($this->albums->contains($album)) {
+            $this->albums->removeElement($album);
             // set the owning side to null (unless already changed)
-            if ($artistNewsId->getNewsArtistId() === $this) {
-                $artistNewsId->setNewsArtistId(null);
+            if ($album->getArtist() === $this) {
+                $album->setArtist(null);
             }
         }
 
@@ -139,30 +145,61 @@ class Artist
     }
 
     /**
-     * @return Collection|Album[]
+     * @return Collection|News[]
      */
-    public function getArtistAlbumId(): Collection
+    public function getNews(): Collection
     {
-        return $this->artist_album_id;
+        return $this->news;
     }
 
-    public function addArtistAlbumId(Album $artistAlbumId): self
+    public function addNews(News $news): self
     {
-        if (!$this->artist_album_id->contains($artistAlbumId)) {
-            $this->artist_album_id[] = $artistAlbumId;
-            $artistAlbumId->setAlbumArtistId($this);
+        if (!$this->news->contains($news)) {
+            $this->news[] = $news;
+            $news->setArtist($this);
         }
 
         return $this;
     }
 
-    public function removeArtistAlbumId(Album $artistAlbumId): self
+    public function removeNews(News $news): self
     {
-        if ($this->artist_album_id->contains($artistAlbumId)) {
-            $this->artist_album_id->removeElement($artistAlbumId);
+        if ($this->news->contains($news)) {
+            $this->news->removeElement($news);
             // set the owning side to null (unless already changed)
-            if ($artistAlbumId->getAlbumArtistId() === $this) {
-                $artistAlbumId->setAlbumArtistId(null);
+            if ($news->getArtist() === $this) {
+                $news->setArtist(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Event[]
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Event $event): self
+    {
+        if (!$this->events->contains($event)) {
+            $this->events[] = $event;
+            $event->setArtist($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        if ($this->events->contains($event)) {
+            $this->events->removeElement($event);
+            // set the owning side to null (unless already changed)
+            if ($event->getArtist() === $this) {
+                $event->setArtist(null);
             }
         }
 

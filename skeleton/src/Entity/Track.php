@@ -17,15 +17,14 @@ class Track
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $title;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Album", inversedBy="album_rtrack_id")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Album", inversedBy="tracks")
      */
-    private $track_album_id;
+    private $album;
 
     public function getId(): ?int
     {
@@ -37,21 +36,21 @@ class Track
         return $this->title;
     }
 
-    public function setTitle(?string $title): self
+    public function setTitle(string $title): self
     {
         $this->title = $title;
 
         return $this;
     }
 
-    public function getTrackAlbumId(): ?Album
+    public function getAlbum(): ?Album
     {
-        return $this->track_album_id;
+        return $this->album;
     }
 
-    public function setTrackAlbumId(?Album $track_album_id): self
+    public function setAlbum(?Album $album): self
     {
-        $this->track_album_id = $track_album_id;
+        $this->album = $album;
 
         return $this;
     }
