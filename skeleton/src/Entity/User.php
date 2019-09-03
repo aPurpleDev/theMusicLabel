@@ -7,9 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
-use App\Interfaces\BuyableInterface;
-use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -36,6 +34,7 @@ class User implements UserInterface
 
     /**
      * @var string The hashed password
+     * @Assert\NotCompromisedPassword
      * @ORM\Column(type="string")
      */
     private $password;

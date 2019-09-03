@@ -23,6 +23,10 @@
                 <th>Price</th>
                 <td>{{ album.price }}</td>
             </tr>
+                <th>Tracks</th>
+                {% for track in album.tracks %}
+                <td>{{ track.title }}</td>
+                {% endfor %}
         </tbody>
     </table>
 
