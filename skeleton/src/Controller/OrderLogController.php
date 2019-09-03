@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/order/log")
+ * @Route("/orders/log")
  */
 class OrderLogController extends AbstractController
 {
