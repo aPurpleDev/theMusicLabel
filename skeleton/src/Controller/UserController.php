@@ -16,6 +16,23 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     /**
+     * @Route("/myorders", name="user_orders", methods={"GET"})
+     */
+    public function myOrders(): Response
+    {
+
+        if($this->getUser())
+        {
+            $user = $this->getUser();
+            return $this->render('user/user_orders.html.twig', [
+                'orders' => $user->getOrders()
+            ]);
+        }
+
+        return $this->redirectToRoute('app_login');
+    }
+
+    /**
      * @Route("/", name="user_index", methods={"GET"})
      */
     public function index(UserRepository $userRepository): Response

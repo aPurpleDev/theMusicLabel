@@ -45,7 +45,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a>
-                    <a class="dropdown-item" href="{{ path('orders_index') }}">Orders</a>
+                    <a class="dropdown-item" href="{{ path('user_orders') }}">Orders</a>
                 </div>
                 <div class="dropdown-divider"></div>
             {% endif %}
@@ -55,6 +55,9 @@
             {% if is_granted('ROLE_ADMIN') %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('user_index') }}">User Administration</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('orders_index') }}">Order Administration</a>
                 </li>
             {% endif %}
             </li>
