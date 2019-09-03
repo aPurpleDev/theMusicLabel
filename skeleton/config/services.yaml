@@ -30,3 +30,11 @@ services:
 
 #    Activate service for listeners uncomment next line
 #    Symfony\Contracts\EventDispatcher\Event: ~
+
+    App\Entity\Artist: ~
+
+    App\Entity\User: ~
+
+    App\EventSubscriber\NewsUserSubscriber:
+        tags:
+            - twig.extension

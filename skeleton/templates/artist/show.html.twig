@@ -27,8 +27,29 @@
                 <th>Bio</th>
                 <td>{{ artist.bio }}</td>
             </tr>
+            <tr>
+                <th>Abonnés</th>
+                    <td>
+                        {% for subby in artist.subscribers %}
+                            <p>{{ subby.firstName }}</p>
+                        {% endfor %}
+                    </td>
+            </tr>
+            <tr>
+                {{ form_start(subForm) }}
+                {{ form_row(subForm.sub) }}
+    {#            {{ form_row(subForm.artistId) }}#}
+                {#                    <button class="btn">Sub</button>#}
+                {{ form_end(subForm) }}
+            </tr>
         </tbody>
     </table>
+    <div>
+        {% for art in user.subscriptions %}
+{#            {{ dump(art) }}#}
+            <p>{{ art.name }}</p>
+        {% endfor %}
+    </div>
 
     <a href="{{ path('artist_index') }}">back to list</a>
 

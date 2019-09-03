@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @Route("/news")
@@ -28,7 +29,7 @@ class NewsController extends AbstractController
     /**
      * @Route("/new", name="news_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, EventDispatcherInterface $dispatcher): Response
     {
         $news = new News();
         $form = $this->createForm(NewsType::class, $news);
@@ -41,6 +42,9 @@ class NewsController extends AbstractController
 
             return $this->redirectToRoute('news_index');
         }
+
+//        $e = new NewsEvent($user);
+//        $dispatcher->dispatch($e, RegisterEvent::NAME);
 
         return $this->render('news/new.html.twig', [
             'news' => $news,

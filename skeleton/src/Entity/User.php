@@ -5,17 +5,17 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use SplObserver;
+use SplSubject;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
-use App\Interfaces\BuyableInterface;
-use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\Validator\Constraints\Date;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
-class User implements UserInterface
+class User implements UserInterface, SplObserver
 {
     /**
      * @ORM\Id()
@@ -54,6 +54,11 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $lastName;
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $subscriptions = [];
 
     public function __construct()
     {
@@ -191,5 +196,47 @@ class User implements UserInterface
         $this->lastName = $lastName;
 
         return $this;
+    }
+
+
+
+    public function getSubscriptions(): ?array
+    {
+        return $this->subscriptions;
+    }
+
+    public function setSubscriptions(?array $subscriptions): self
+    {
+        $this->subscriptions = $subscriptions;
+
+        return $this;
+    }
+
+    /**
+     * @param Artist $artist
+     */
+    public function addArtist(Artist $artist)
+    {
+        if (empty($this->subscriptions)) {
+            $this->subscriptions[$artist->getId()] = $artist;
+        }
+        if (!in_array($artist, $this->subscriptions)) {
+            $this->subscriptions[$artist->getId()] = $artist;
+        }
+
+    }
+
+    /**
+     * Receive update from subject
+     * @link https://php.net/manual/en/splobserver.update.php
+     * @param SplSubject $subject <p>
+     * The <b>SplSubject</b> notifying the observer of an update.
+     * </p>
+     * @return void
+     * @since 5.1.0
+     */
+    public function update(SplSubject $subject)
+    {
+        $this->subscriptions[] = $subject->getNews()[0];
     }
 }
