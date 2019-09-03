@@ -4,6 +4,7 @@
 
     <h2 class="bg-success text-center">Welcome to the MusicLabel</h2>
     {% if app.user == false %}
+        <div class="jumbotron">
         <div class="card">
             <div class="card-header">
                 <h2 class="text-success text-center"</h2>Connect
@@ -14,7 +15,9 @@
                 <a href="{{ path('app_login') }}" class="btn btn-primary align-center">LOGIN</a>
             </div>
         </div>
+        </div>
 
+        <div class="jumbotron">
         <div class="card">
             <div class="card-header">
                 <h2 class="text-success text-center"</h2>Register
@@ -24,6 +27,7 @@
                 <p class="card-text">Partake in the Musical fun</p>
                 <a href="{{ path('app_register') }}" class="btn btn-primary align-center">REGISTER</a>
             </div>
+        </div>
         </div>
     {% endif %}
 
@@ -51,7 +55,7 @@
                 <td>{{ news.artist }}</td>
                 <td>{{ news.content }}</td>
                 <td>
-                    <a class = "btn-info" href="{{ path('news_show', {'id': news.id}) }}">View</a>
+                    <a class = "btn btn-info" href="{{ path('news_show', {'id': news.id}) }}">View</a>
                 </td>
             </tr>
         {% endfor %}
@@ -79,7 +83,8 @@
                 <td>{{ album.artist }}</td>
                 <td>{{ album.price }} €</td>
                 <td>
-                    <a class = "btn-info" href="{{ path('news_show', {'id': album.id}) }}">View</a>
+                    <a class = "btn btn-info" href="{{ path('album_show', {'id': album.id}) }}">Show</a>
+                    <a type="submit" id="btn-buy" class="btn btn-success" href="{{ path('album_buy', {'id': album.id}) }}">Buy</a>
                 </td>
             </tr>
         {% endfor %}
@@ -111,7 +116,8 @@
                 <td>{{ event.artist }}</td>
                 <td>{{ event.price }} €</td>
                 <td>
-                    <a class = "btn-info" href="{{ path('event_show', {'id': event.id}) }}">View</a>
+                    <a class = "btn btn-info" href="{{ path('event_show', {'id': event.id}) }}">View</a>
+                    <a type="submit" id="btn-buy" class="btn btn-success" href="{{ path('event_buy', {'id': event.id}) }}">Buy</a>
                 </td>
             </tr>
         {% endfor %}

@@ -121,8 +121,8 @@ class AlbumController extends AbstractController
             $order->setOrderNumber($orderlog->getId());
             $manager->flush();
 
-            return $this->render('home/index.html.twig', [
-                'album' => $album
+            return $this->render('user/user_orders.html.twig', [
+                'album' => $album, 'orders' => $this->getUser()->getOrders()
             ]);
         }
 
