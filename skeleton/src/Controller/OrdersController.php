@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/order")
+ * @Route("/orders")
  */
 class OrdersController extends AbstractController
 {
@@ -20,7 +20,7 @@ class OrdersController extends AbstractController
      */
     public function index(OrderRepository $orderRepository): Response
     {
-        return $this->render('order/index.html.twig', [
+        return $this->render('orders/index.html.twig', [
             'orders' => $orderRepository->findAll(),
         ]);
     }
@@ -42,8 +42,8 @@ class OrdersController extends AbstractController
             return $this->redirectToRoute('order_index');
         }
 
-        return $this->render('order/new.html.twig', [
-            'order' => $order,
+        return $this->render('orders/new.html.twig', [
+            'orders' => $order,
             'form' => $form->createView(),
         ]);
     }
@@ -55,8 +55,8 @@ class OrdersController extends AbstractController
     {
         $orderlog = $order->getOrderLogs();
 
-        return $this->render('order/show.html.twig', [
-            'order' => $order,
+        return $this->render('orders/show.html.twig', [
+            'orders' => $order,
             'orderlogs' => $orderlog
         ]);
     }
@@ -75,8 +75,8 @@ class OrdersController extends AbstractController
             return $this->redirectToRoute('order_index');
         }
 
-        return $this->render('order/edit.html.twig', [
-            'order' => $order,
+        return $this->render('orders/edit.html.twig', [
+            'orders' => $order,
             'form' => $form->createView(),
         ]);
     }

@@ -7,7 +7,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class OrderEvent extends Event
 {
-    const NAME = 'user.order';
+    const NAME = 'user.orders';
 
     private $order;
 
