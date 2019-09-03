@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Order index{% endblock %}
+{% block title %}Orders index{% endblock %}
 
 {% block body %}
-    <h1>Order index</h1>
+    <h1>Orders index</h1>
 
     <table class="table">
         <thead>
@@ -23,8 +23,8 @@
                 <td>{{ order.orderDate ? order.orderDate|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ order.totalPrice }}</td>
                 <td>
-                    <a href="{{ path('order_show', {'id': order.id}) }}">show</a>
-                    <a href="{{ path('order_edit', {'id': order.id}) }}">edit</a>
+                    <a href="{{ path('orders_show', {'id': order.id}) }}">show</a>
+                    <a href="{{ path('orders_edit', {'id': order.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -35,5 +35,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('order_new') }}">Create new</a>
+    <a href="{{ path('orders_new') }}">Create new</a>
 {% endblock %}
