@@ -3,8 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Event;
+use App\Entity\OrderLog;
+use App\Entity\Orders;
+use App\Entity\User;
 use App\Form\EventType;
 use App\Repository\EventRepository;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -90,5 +94,36 @@ class EventController extends AbstractController
         }
 
         return $this->redirectToRoute('event_index');
+    }
+
+    /**
+     * @Route("/{id}/buy", name="event_buy", methods={"GET","POST"})
+     */
+    public function buy(Event $event, ObjectManager $manager): Response
+    {
+
+        if ($this->getUser() instanceof User) {
+            $orderlog = new OrderLog();
+            $order = new Orders();
+
+            $orderlog->setEvent($event);
+            $orderlog->setOrdernumber($order);
+            $order->setOrderDate(new \DateTime());
+            $order->setTotalPrice($event->getPrice());
+            $order->setUser($this->getUser());
+
+            $manager->persist($orderlog);
+            $manager->persist($order);
+            $manager->flush();
+
+            $order->setOrderNumber($orderlog->getId());
+            $manager->flush();
+
+            return $this->render('home/index.html.twig', [
+                'event' => $event
+            ]);
+        }
+
+        return $this->redirectToRoute('app_login');
     }
 }

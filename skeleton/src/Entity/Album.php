@@ -175,4 +175,12 @@ class Album implements BuyableInterface
     {
         return $this->getTitle();
     }
+
+    public function __toString()
+    {
+        return  'Album title: ' . $this->getTitle() . '.' .
+                ' Produced by the artist: ' . $this->getArtist()->getName()  .
+                '. Released at date: ' . $this->getReleaseDate()->format('Y-m-d') .
+                '. Price : ' . $this->getPrice() . ' €';
+    }
 }

@@ -25,6 +25,7 @@
                 <td>
                     <a href="{{ path('album_show', {'id': album.id}) }}">show</a>
                     <a href="{{ path('album_edit', {'id': album.id}) }}">edit</a>
+                    <a type="submit" id="btn-buy" class="btn btn-info" href="{{ path('album_buy', {'id': album.id}) }}">Buy</a>
                 </td>
             </tr>
         {% else %}

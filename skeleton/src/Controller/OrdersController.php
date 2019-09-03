@@ -53,8 +53,11 @@ class OrdersController extends AbstractController
      */
     public function show(Orders $order): Response
     {
+        $orderlog = $order->getOrderLogs();
+
         return $this->render('order/show.html.twig', [
             'order' => $order,
+            'orderlogs' => $orderlog
         ]);
     }
 
