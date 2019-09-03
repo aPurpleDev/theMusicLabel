@@ -2,12 +2,15 @@
 
 {% block body %}
 
-    <h2 class="bg-success text-center">Welcome to the MusicLabel</h2>
+    <h2 class="bg-success text-center display-5 text-light">Welcome to <em class = "text-dark">theMusicLabel</em>
+        {% if app.user %}🔥{{ app.user.firstname }}🔥{% endif %}
+
+    </h2>
     {% if app.user == false %}
-        <div class="jumbotron">
-        <div class="card">
+        <div class="jumbotron bg-info">
+        <div class="card rounded">
             <div class="card-header">
-                <h2 class="text-success text-center"</h2>Connect
+                <h2 class="text-success text-center display-6">Connect</h2>
             </div>
             <div class="card-body text-center">
                 <h5 class="card-title">Connect to your account and plug into your favorite Artists</h5>
@@ -17,10 +20,10 @@
         </div>
         </div>
 
-        <div class="jumbotron">
-        <div class="card">
+        <div class="jumbotron bg-info">
+        <div class="card rounded">
             <div class="card-header">
-                <h2 class="text-success text-center"</h2>Register
+                <h2 class="text-success text-center display-6">Register</h2>
             </div>
             <div class="card-body text-center">
                 <h5 class="card-title">Join millions WorldWide in the newest Music Hub</h5>
@@ -31,14 +34,14 @@
         </div>
     {% endif %}
 
-    {% if app.user %}
-        <h3 class = "text-success text-center">Greetings {{ app.user.firstname }}</h3>
-    {% endif %}
 
-    <div class = "text-left">
-    <h4 class = "bg-secondary text-light">Latest News</h4></div>
 
-    <table class="table">
+
+
+    <div class = "text-center">
+    <h4 class = "bg-info text-light display-6">Latest News</h4></div>
+
+    <table class="table table-hover">
         <thead>
         <tr>
             <th>Title</th>
@@ -63,10 +66,10 @@
     </table>
     <hr class = "bg-secondary">
 
-    <div class = "text-left">
-        <h4 class = "bg-secondary text-light">Newest Albums</h4></div>
+    <div class = "text-center">
+        <h4 class = "bg-info text-light display-6">Newest Albums</h4></div>
 
-    <table class="table">
+    <table class="table table-hover">
         <thead>
         <tr>
             <th>Title</th>
@@ -92,10 +95,10 @@
     </table>
     <hr class = "bg-secondary">
 
-    <div class = "text-left">
-    <h4 class = "bg-secondary text-light">Upcoming Events</h4></div>
+    <div class = "text-center">
+    <h4 class = "bg-info text-light display-6">Upcoming Events</h4></div>
 
-    <table class="table">
+    <table class="table table-hover">
         <thead>
         <tr>
             <th>Name</th>
