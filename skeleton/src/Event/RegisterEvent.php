@@ -3,7 +3,6 @@
 namespace App\Event;
 
 use App\Entity\User;
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Contracts\EventDispatcher\Event;
 
 /**

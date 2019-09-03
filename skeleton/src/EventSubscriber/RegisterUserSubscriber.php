@@ -4,49 +4,75 @@ namespace App\EventSubscriber;
 
 use App\Event\OrderEvent;
 use App\Event\RegisterEvent;
+use Swift_Mailer;
+use Swift_Message;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
+/**
+ * Class RegisterUserSubscriber
+ * @package App\EventSubscriber
+ */
 class RegisterUserSubscriber implements EventSubscriberInterface
 {
+    /**
+     * @var Swift_Mailer
+     */
     private $mailer;
+
+    /**
+     * @var
+     */
+    private $adminMail;
 
     /**
      * RegisterListener constructor.
      * @param $mailer
      */
-    public function __construct(\Swift_Mailer $mailer)
+    public function __construct(Swift_Mailer $mailer, $adminMail)
     {
         $this->mailer = $mailer;
+        $this->adminMail = $adminMail;
     }
 
-    public function sendMailToNewlyRegisteredUser($user)
+    /**
+     * @param RegisterEvent $event
+     */
+    public function sendMailToNewlyRegisteredUser(RegisterEvent $event)
     {
-        $a = (new \Swift_Message('Hello '.$user['name']))
-            ->setFrom('themusic@label.com')
-//            ->setTo('$user['email']')
-            ->setTo('14a0577f61-54f64c@inbox.mailtrap.io')
+        $user = $event->getUser();
+
+        $a = (new Swift_Message('Hello '.$user->getFirstName()))
+            ->setFrom($this->adminMail)
+            ->setTo($user->getEmail())
             ->setBody('Welcome to theMusicLabel Corp, We are pleased to have you joining us, I hope you will enjoy & listen to every tracks available. Greetings.');
 
         $this->mailer->send($a);
     }
 
-    public function sendMailOnNewOrder()
+    /**
+     * @param OrderEvent $event
+     */
+    public function sendMailOnNewOrder(OrderEvent $event)
     {
-        $a = (new \Swift_Message('Hello '.$user['name']))
-            ->setFrom('themusic@label.com')
-//            ->setTo('$user['email']')
-            ->setTo('14a0577f61-54f64c@inbox.mailtrap.io')
+        $user = $event->getUser();
+
+        $a = (new Swift_Message('Hello '.$user->getFirstName()))
+            ->setFrom($this->adminMail)
+            ->setTo($user->getEmail())
             ->setBody('Welcome to theMusicLabel Corp, We are pleased to have you joining us, I hope you will enjoy & listen to every tracks available. Greetings.');
 
         $this->mailer->send($a);
     }
 
+    /**
+     * @return array
+     */
     public static function getSubscribedEvents()
     {
         return [
-//            RegisterEvent::NAME => [
-//                'sendMailToNewlyRegisteredUser', -10
-//            ],
+            RegisterEvent::NAME => [
+                'sendMailToNewlyRegisteredUser', -10
+            ],
             OrderEvent::NAME => [
                 'sendMailOnNewOrder', -10
             ]

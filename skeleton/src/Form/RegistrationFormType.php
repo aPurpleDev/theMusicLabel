@@ -41,7 +41,7 @@ class RegistrationFormType extends AbstractType
             ->add('roles', CollectionType::class, [
                 'entry_type' => HiddenType::class,
                 'entry_options' => [
-                    'data' => 'ROLE_USER'
+                    'data' => 'ROLE_CLIENT'
                 ]])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,

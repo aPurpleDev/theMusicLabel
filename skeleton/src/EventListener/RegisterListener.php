@@ -2,26 +2,45 @@
 
 namespace App\EventListener;
 
+use Swift_Mailer;
+use Swift_Message;
+use Symfony\Contracts\EventDispatcher\Event;
+
+/**
+ * Class RegisterListener
+ * @package App\EventListener
+ */
 class RegisterListener
 {
+    /**
+     * @var Swift_Mailer
+     */
     private $mailer;
 
-    private $user;
-
+    /**
+     * @var
+     */
+    private $adminMail;
     /**
      * RegisterListener constructor.
      * @param $mailer
      */
-    public function __construct(\Swift_Mailer $mailer)
+    public function __construct(Swift_Mailer $mailer, $adminMail)
     {
-        $this->mailer = $mailer;
+        $this->mailer = $mailer;$this->adminMail;
+        $this->adminMail = $adminMail;
     }
 
-    public function sendMailToUser()
+    /**
+     * @param Event $event
+     */
+    public function sendMailToUser(Event $event)
     {
-        $message = (new \Swift_Message('Hello'))
-            ->setFrom('themusic@label.com')
-            ->setTo('14a0577f61-54f64c@inbox.mailtrap.io')
+        $user = $event->getUser();
+
+        $message = (new Swift_Message('Hello '.$user->getFirstName()))
+            ->setFrom($this->adminMail)
+            ->setTo($user->getEmail())
             ->setBody('Welcome to theMusicLabel Corp, 
             We are pleased to have you joining us, I hope you will enjoy & listen to every tracks available. 
             Greetings.');
