@@ -24,7 +24,9 @@
                 <td>{{ album.price }}</td>
                 <td>
                     <a href="{{ path('album_show', {'id': album.id}) }}">show</a>
+                    {% if is_granted ('ROLE_ADMIN') %}
                     <a href="{{ path('album_edit', {'id': album.id}) }}">edit</a>
+                    {% endif %}
                     <a type="submit" id="btn-buy" class="btn btn-info" href="{{ path('album_buy', {'id': album.id}) }}">Buy</a>
                 </td>
             </tr>

@@ -37,9 +37,6 @@
                 </div>
                 <div class="dropdown-divider"></div>
                 {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('orders_index') }}">Orders</a>
-            </li>
 
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -47,14 +44,10 @@
                     Account
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{{ path('orders_index') }}">Orders (to change)</a>
-                    <a class="dropdown-item" href="{{ path('news_index') }}">News and Events (to change)</a>
                     <a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a>
+                    <a class="dropdown-item" href="{{ path('user_orders') }}">Orders</a>
                 </div>
                 <div class="dropdown-divider"></div>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('orders_index') }}">Orders</a>
-            </li>
             {% endif %}
 
 
@@ -62,6 +55,9 @@
             {% if is_granted('ROLE_ADMIN') %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('user_index') }}">User Administration</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('orders_index') }}">Order Administration</a>
                 </li>
             {% endif %}
             </li>

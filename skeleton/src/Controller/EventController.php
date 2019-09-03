@@ -119,8 +119,8 @@ class EventController extends AbstractController
             $order->setOrderNumber($orderlog->getId());
             $manager->flush();
 
-            return $this->render('home/index.html.twig', [
-                'event' => $event
+            return $this->render('user/user_orders.html.twig', [
+                'event' => $event, 'orders' => $this->getUser()->getOrders()
             ]);
         }
 

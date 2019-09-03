@@ -2,6 +2,10 @@
 
 namespace App\Controller;
 
+use App\Repository\AlbumRepository;
+use App\Repository\EventRepository;
+use App\Repository\NewsRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,8 +19,13 @@ class HomeController extends AbstractController
      * @Route("/", name="home", methods={"GET"})
      * @return Response
      */
-    public function index(): Response
+    public function index(NewsRepository $newsRepository, AlbumRepository $albumRepository, EventRepository $eventRepository ,UserRepository $userRepository): Response
     {
-        return $this->render('home/index.html.twig');
+        $newsListing = $newsRepository->findBy(array(),array('id'=>'DESC'),5,1);
+        $albumListing = $albumRepository->findBy(array(),array('id'=>'DESC'),5,1);
+        $eventListing = $eventRepository->findBy(array(),array('id'=>'DESC'),5,1);
+        $userListing = $userRepository->findBy(array(),array('id'=>'DESC'),5,1);
+
+        return $this->render('home/index.html.twig',['newslisting' => $newsListing, 'albumlisting' => $albumListing, 'userlisting' => $userListing, 'eventlisting' => $eventListing]);
     }
 }
