@@ -3,8 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Album;
+use App\Entity\Event;
+use App\Entity\OrderLog;
+use App\Entity\Orders;
+use App\Entity\User;
 use App\Form\AlbumType;
+use App\Interfaces\BuyableInterface;
 use App\Repository\AlbumRepository;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -83,12 +89,43 @@ class AlbumController extends AbstractController
      */
     public function delete(Request $request, Album $album): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$album->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $album->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($album);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('album_index');
+    }
+
+    /**
+     * @Route("/{id}/buy", name="album_buy", methods={"GET","POST"})
+     */
+    public function buy(Album $album, ObjectManager $manager): Response
+    {
+
+        if ($this->getUser() instanceof User) {
+            $orderlog = new OrderLog();
+            $order = new Orders();
+
+            $orderlog->setAlbum($album);
+            $orderlog->setOrdernumber($order);
+            $order->setOrderDate(new \DateTime());
+            $order->setTotalPrice($album->getPrice());
+            $order->setUser($this->getUser());
+
+            $manager->persist($orderlog);
+            $manager->persist($order);
+            $manager->flush();
+
+            $order->setOrderNumber($orderlog->getId());
+            $manager->flush();
+
+            return $this->render('home/index.html.twig', [
+                'album' => $album
+            ]);
+        }
+
+        return $this->redirectToRoute('app_login');
     }
 }

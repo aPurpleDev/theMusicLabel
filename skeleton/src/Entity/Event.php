@@ -172,4 +172,14 @@ class Event implements BuyableInterface
     {
         return $this->getName();
     }
+
+    public function __toString()
+    {
+        return  'Event name: ' . $this->getName() . '.' .
+            ' Performed by the artist: ' . $this->getArtist()->getName()  .
+            '. Taking place in: ' . $this->getCity() .
+            '. Start date: ' . $this->getStartDate()->format('Y-m-d') .
+            '. End date: ' . $this->getEndDate()->format('Y-m-d') .
+            '. Price : ' . $this->getPrice() . ' €' ;
+    }
 }

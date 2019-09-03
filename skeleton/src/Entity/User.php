@@ -8,6 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Interfaces\BuyableInterface;
+use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -189,30 +191,5 @@ class User implements UserInterface
         $this->lastName = $lastName;
 
         return $this;
-    }
-
-    public function buy(BuyableInterface $buyable)
-    {
-        $buyable->getBuyableName();
-        $buyable->getPrice();
-
-        $orderlog = new OrderLog();
-        $order;
-
-        if($buyable instanceof Event)
-        {
-            $orderlog->setEvent($buyable);
-            $orderlog->setOrdernumber($buyable->getId());
-            $order = new Orders();
-            $order->setOrderNumber($orderlog->getId());
-        }
-        if($buyable instanceof Album)
-        {
-            $orderlog->setAlbum($buyable);
-            $orderlog->setOrdernumber($buyable->getId());
-            $order = new Orders();
-            $order->setOrderNumber($orderlog->getId());
-        }
-        return $order;
     }
 }

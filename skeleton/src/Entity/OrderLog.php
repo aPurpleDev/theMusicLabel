@@ -27,7 +27,7 @@ class OrderLog
     private $album;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Orders", inversedBy="orderLogs")
+     * @ORM\ManyToOne(targetEntity="Orders", inversedBy="orderLogs", cascade={"persist"})
      */
     private $ordernumber;
 
