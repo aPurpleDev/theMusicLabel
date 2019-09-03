@@ -19,7 +19,7 @@ class Orders
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $orderNumber;
 
@@ -34,7 +34,7 @@ class Orders
     private $totalPrice;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\OrderLog", mappedBy="ordernumber")
+     * @ORM\OneToMany(targetEntity="App\Entity\OrderLog", mappedBy="ordernumber", cascade={"persist"})
      */
     private $orderLogs;
 
