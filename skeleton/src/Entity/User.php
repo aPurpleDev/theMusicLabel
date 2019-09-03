@@ -9,6 +9,7 @@ use SplObserver;
 use SplSubject;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -37,6 +38,7 @@ class User implements UserInterface, SplObserver
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\NotCompromisedPassword
      */
     private $password;
 

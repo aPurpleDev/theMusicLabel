@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use SplObserver;
 use SplSubject;
+use Symfony\Component\Validator\Constraint as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArtistRepository")
@@ -27,6 +28,7 @@ class Artist implements SplSubject
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Country
      */
     private $country;
 
@@ -75,6 +77,11 @@ class Artist implements SplSubject
     public function getName(): ?string
     {
         return $this->name;
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
     }
 
     public function setName(string $name): self

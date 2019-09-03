@@ -2,19 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8a12e53c-cc97-47c0-a7d1-77a282f4c7e2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/composerJson.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Event/NewsEvent.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/EventSubscriber/NewsUserSubscriber.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Form/SubType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ArtistController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ArtistController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/NewsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/NewsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Artist.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Artist.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/artist/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/artist/show.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -160,7 +150,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1567511996253</updated>
-      <workItem from="1567511997621" duration="11294000" />
+      <workItem from="1567511997621" duration="11796000" />
     </task>
     <task id="LOCAL-00001" summary="fix name folders orders">
       <created>1567512958304</created>
@@ -169,7 +159,14 @@
       <option name="project" value="LOCAL" />
       <updated>1567512958304</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="subscribers with observer pattern&#10;add artist to user&#10;add user to artist">
+      <created>1567523557731</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1567523557731</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -188,14 +185,15 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="fix name folders orders" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix name folders orders" />
+    <MESSAGE value="subscribers with observer pattern&#10;add artist to user&#10;add user to artist" />
+    <option name="LAST_COMMIT_MESSAGE" value="subscribers with observer pattern&#10;add artist to user&#10;add user to artist" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/src/Entity/Artist.php</url>
-          <line>218</line>
+          <line>285</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
