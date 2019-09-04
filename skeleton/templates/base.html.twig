@@ -74,12 +74,7 @@
                 <div class= "jumbotron bg-sucess">
                     <h3 class = "text-primary text-right">Your Shopping Cart</h3>
 
-                {% for item in shoppingcart %}
-
-                    <p class="text-right display-10 lead"> {{ item }} </p>
-
-                {% endfor %}
-
+                    {{ shoppingcart|length }}
 
                 </div>
 

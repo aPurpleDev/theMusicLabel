@@ -33,6 +33,24 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/myshoppingcart", name="user_cart", methods={"GET"})
+     */
+    public function myShoppingCart(): Response
+    {
+
+        if(isset($_SESSION["shoppingCart"]))
+        {
+            return $this->render('user/user_orders.html.twig', [
+                'shoppingcart' => $_SESSION["shoppingCart"]
+            ]);
+        }
+
+        echo '<script type="text/javascript">window.alert("Cart is Empty. Returning to Homepage")</script>';
+
+        return $this->redirectToRoute('home');
+    }
+
+    /**
      * @Route("/", name="user_index", methods={"GET"})
      */
     public function index(UserRepository $userRepository): Response

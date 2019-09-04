@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Shopping Cart{% endblock %}
+
+{% block body %}
+
+    <div class = "jumbotron bg-success">
+    <h1>My Shopping Cart</h1>
+
+        {% if shoppingcart is defined %}
+        {% for item in shoppingcart %}
+
+            <p class = "lead">item</p>
+            <br>
+
+        {% endfor %}
+        {% endif %}
+
+        <p class = "lead text-danger">Your shopping Cart is empty.</p>
+
+    </div>
+{% endblock %}
