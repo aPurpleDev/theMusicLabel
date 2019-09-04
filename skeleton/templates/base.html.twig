@@ -70,16 +70,17 @@
 </nav>
 
 {% block shoppingcart %}
-{% if shoppingcart is defined %}
+    {% if app.user %}
 
-                <div class= "jumbotron bg-sucess">
-                    <h3 class = "text-primary text-right">Your Shopping Cart</h3>
+{% if shoppingcart is defined and shoppingcart|length > 0 %}
 
-                    <p class="text-right display-10 lead">You have {{ shoppingcart|length }} Items in your cart</p>
-
+                <div class= "jumbotron bg-sucess" style="background-image: url(https://wallpaper-gallery.net/images/rihanna-wallpaper-widescreen/rihanna-wallpaper-widescreen-18.jpg); background-size: 70%;">
+                    <h3 class = "text-success text-left">Your Shopping Cart : </h3> <p class="text-left text-warning display-10 lead">{{ shoppingcart|length }} Items</p>
+                    <a class="btn bg-warning" href="{{ path('user_cart') }}">Open</a>
                 </div>
 
             {% endif %}
+    {% endif %}
 {% endblock %}
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

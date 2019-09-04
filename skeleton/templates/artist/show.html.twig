@@ -38,7 +38,9 @@
             <tr>
                 {% if subForm is defined %}
                     {{ form_start(subForm) }}
+                    <div class = "btn btn-warning">
                     {{ form_widget(subForm) }}
+                    </div>
                     {{ form_end(subForm) }}
                 {% endif %}
             </tr>

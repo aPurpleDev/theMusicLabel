@@ -23,8 +23,10 @@
                 <td>{{ order.orderDate ? order.orderDate|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ order.totalPrice }}</td>
                 <td>
-                    <a href="{{ path('orders_show', {'id': order.id}) }}">show</a>
-                    <a href="{{ path('orders_edit', {'id': order.id}) }}">edit</a>
+                    <a class = "btn btn-success" href="{{ path('orders_show', {'id': order.id}) }}">show</a>
+                    {% if is_granted ('ROLE_ADMIN') %}
+                    <a class = "btn btn-warning" href="{{ path('orders_edit', {'id': order.id}) }}">edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}

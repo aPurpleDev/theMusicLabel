@@ -2,9 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Orders;
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\AlbumRepository;
+use App\Repository\EventRepository;
+use App\Repository\NewsRepository;
 use App\Repository\UserRepository;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,6 +53,51 @@ class UserController extends AbstractController
         echo '<script type="text/javascript">window.alert("Cart is Empty. Returning to Homepage")</script>';
 
         return $this->redirectToRoute('home');
+    }
+
+    /**
+     * @Route("/myshoppingcart/pay", name="user_pay", methods={"GET"})
+     */
+    public function payShoppingCart(ObjectManager $manager, NewsRepository $newsRepository, AlbumRepository $albumRepository, EventRepository $eventRepository ,UserRepository $userRepository): Response
+    {
+       if(isset($_SESSION["shoppingCart"]))
+        {
+            $order = new Orders();
+            $order->setUser($this->getUser());
+            $order->setOrderDate(new \DateTime());
+            $order->setOrderNumber($order->getId() + rand(100,1000000));
+            $manager->persist($order);
+            $manager->flush();
+
+            $shoppingCart = $_SESSION["shoppingCart"];
+            $totalPrice = 0;
+
+            foreach($shoppingCart as $value)
+            {
+
+                $a = $albumRepository->find($value->getAlbum()->getId());
+                $value->setAlbum($a);
+                $order->addOrderLog($value);
+                $manager->flush();
+                $totalPrice += 10;
+            }
+
+            $order->setTotalPrice((int)$totalPrice);
+            $manager->persist($order);
+            $manager->flush();
+            $shoppingCart = null;
+
+            $newsListing = $newsRepository->findBy(array(),array('id'=>'DESC'),5,1);
+            $albumListing = $albumRepository->findBy(array(),array('id'=>'DESC'),5,1);
+            $eventListing = $eventRepository->findBy(array(),array('id'=>'DESC'),5,1);
+            $userListing = $userRepository->findBy(array(),array('id'=>'DESC'),5,1);
+
+            return $this->render('home/index.html.twig',['newslisting' => $newsListing, 'albumlisting' => $albumListing, 'userlisting' => $userListing, 'eventlisting' => $eventListing, 'shoppingcart' => $shoppingCart, 'order' => $order]);
+        }
+
+        echo '<script type="text/javascript">window.alert("Cart is Empty. Returning to Homepage")</script>';
+
+        return $this->redirectToRoute('app_login');
     }
 
     /**

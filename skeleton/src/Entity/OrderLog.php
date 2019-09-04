@@ -17,12 +17,12 @@ class OrderLog
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Event", inversedBy="orderLogs")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Event", inversedBy="orderLogs", cascade={"persist"})
      */
     private $event;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Album", inversedBy="orderLogs")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Album", inversedBy="orderLogs", cascade={"persist"})
      */
     private $album;
 

@@ -2,17 +2,16 @@
 
 {% block body %}
 
-    <h2 class="bg-success text-center display-5 text-light">Welcome to <em class = "text-dark">theMusicLabel</em>
-        {% if app.user %}🔥{{ app.user.firstname }}🔥{% endif %}
+    <h4 class="bg-success text-center display-4 text-light">Welcome {% if app.user %}🔥{{ app.user.firstname }}🔥{% endif %}
 
-    </h2>
+    </h4>
     {% if app.user == false %}
-        <div class="jumbotron bg-info">
+        <div class="jumbotron" style="background-image: url(https://wallpapercave.com/wp/eee9H8z.jpg); background-size: 100%;">
         <div class="card rounded">
             <div class="card-header">
                 <h2 class="text-success text-center display-6">Connect</h2>
             </div>
-            <div class="card-body text-center">
+            <div class="card-body text-center bg-transparent">
                 <h5 class="card-title">Connect to your account and plug into your favorite Artists</h5>
                 <p class="card-text">Top prices for Albums and Events</p>
                 <a href="{{ path('app_login') }}" class="btn btn-primary align-center">LOGIN</a>
@@ -20,12 +19,12 @@
         </div>
         </div>
 
-        <div class="jumbotron bg-info">
+        <div class="jumbotron" style="background-image: url(http://static.hdw.eweb4.com/media/wallpapers_dl/1/140/1394335-abstract-music-art.jpg); background-size: 100%;">
         <div class="card rounded">
             <div class="card-header">
                 <h2 class="text-success text-center display-6">Register</h2>
             </div>
-            <div class="card-body text-center">
+            <div class="card-body text-center bg-transparent">
                 <h5 class="card-title">Join millions WorldWide in the newest Music Hub</h5>
                 <p class="card-text">Partake in the Musical fun</p>
                 <a href="{{ path('app_register') }}" class="btn btn-primary align-center">REGISTER</a>
@@ -34,7 +33,8 @@
         </div>
     {% endif %}
 
-    <div class = "text-center">
+
+        <div class = "text-center">
     <h4 class = "bg-info text-light display-6">Latest News</h4></div>
 
     <table class="table table-hover">

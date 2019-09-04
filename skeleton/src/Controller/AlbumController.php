@@ -114,7 +114,7 @@ class AlbumController extends AbstractController
             //$order->setOrderDate(new \DateTime());
             //$order->setTotalPrice($album->getPrice());
             //$order->setUser($this->getUser());
-            $manager->persist($orderlog);
+             $manager->persist($orderlog);
             //$manager->persist($order);
             $manager->flush();
 

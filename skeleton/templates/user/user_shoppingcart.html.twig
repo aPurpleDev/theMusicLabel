@@ -12,10 +12,13 @@
         {% if shoppingcart is defined %}
             {% for item in shoppingcart %}
 
-                <p class = "lead">{{  item }}</p>
+                <p class = "lead">{{  item }} ({{ item.album.artist.name }})</p>
                 <br>
 
             {% endfor %}
+
+            <a type="submit" id="btn-pay" class="btn btn-success" href="{{ path('user_pay') }}">Pay Order</a>
+
         {% endif %}
 
         {% if shoppingcart is not defined %}
