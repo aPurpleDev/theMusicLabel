@@ -11,6 +11,7 @@ use App\Form\AlbumType;
 use App\Interfaces\BuyableInterface;
 use App\Repository\AlbumRepository;
 use Doctrine\Common\Persistence\ObjectManager;
+use function PHPSTORM_META\elementType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -101,28 +102,39 @@ class AlbumController extends AbstractController
     /**
      * @Route("/{id}/buy", name="album_buy", methods={"GET","POST"})
      */
-    public function buy(Album $album, ObjectManager $manager): Response
+    public function buy(Album $album, ObjectManager $manager, AlbumRepository $albumRepository): Response
     {
 
         if ($this->getUser() instanceof User) {
+
             $orderlog = new OrderLog();
-            $order = new Orders();
-
+            //$order = new Orders();
             $orderlog->setAlbum($album);
-            $orderlog->setOrdernumber($order);
-            $order->setOrderDate(new \DateTime());
-            $order->setTotalPrice($album->getPrice());
-            $order->setUser($this->getUser());
-
+            //$orderlog->setOrdernumber($order);
+            //$order->setOrderDate(new \DateTime());
+            //$order->setTotalPrice($album->getPrice());
+            //$order->setUser($this->getUser());
             $manager->persist($orderlog);
-            $manager->persist($order);
+            //$manager->persist($order);
             $manager->flush();
 
-            $order->setOrderNumber($orderlog->getId());
-            $manager->flush();
+            if(isset($_SESSION["shoppingCart"]))
+            {
+            $shoppingCart = $_SESSION["shoppingCart"];
+            $shoppingCart[] = $orderlog;
+            $_SESSION["shoppingCart"] = $shoppingCart;
+            }
+            else{
+            $shoppingCart = [];
+            $shoppingCart[] = $orderlog;
+            $_SESSION["shoppingCart"] = $shoppingCart;
+            }
 
-            return $this->render('user/user_orders.html.twig', [
-                'album' => $album, 'orders' => $this->getUser()->getOrders()
+            //$order->setOrderNumber($orderlog->getId());
+            //$manager->flush();
+
+            return $this->render('album/index.html.twig', [
+                'album' => $album, 'orders' => $this->getUser()->getOrders(), 'shoppingcart' => $_SESSION["shoppingCart"], 'albums' => $albumRepository->findAll()
             ]);
         }
 

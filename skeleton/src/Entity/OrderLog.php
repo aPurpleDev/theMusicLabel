@@ -71,4 +71,23 @@ class OrderLog
 
         return $this;
     }
+
+    public function __toString()
+    {
+        $orderlogcontent = '';
+
+        if($orderlogcontent === null)
+        {
+        $orderlogcontent = "Items in cart: ";
+        }
+
+        if($this->getAlbum() != null)
+        {
+        $orderlogcontent .= $this->getAlbum();
+        }
+
+        $orderlogcontent .= $this->getEvent();
+
+        return nl2br($orderlogcontent);
+    }
 }
