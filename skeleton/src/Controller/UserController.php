@@ -60,23 +60,31 @@ class UserController extends AbstractController
      */
     public function payShoppingCart(ObjectManager $manager, NewsRepository $newsRepository, AlbumRepository $albumRepository, EventRepository $eventRepository ,UserRepository $userRepository): Response
     {
-
-        if(isset($_SESSION["shoppingCart"]))
+       if(isset($_SESSION["shoppingCart"]))
         {
             $order = new Orders();
             $order->setUser($this->getUser());
             $order->setOrderDate(new \DateTime());
             $order->setOrderNumber($order->getId() + rand(100,1000000));
+            $manager->persist($order);
+            $manager->flush();
 
             $shoppingCart = $_SESSION["shoppingCart"];
+            $totalPrice = 0;
 
             foreach($shoppingCart as $value)
             {
+
+                $a = $albumRepository->find($value->getAlbum()->getId());
+                $value->setAlbum($a);
                 $order->addOrderLog($value);
+                $manager->flush();
+                $totalPrice += 10;
             }
 
+            $order->setTotalPrice((int)$totalPrice);
             $manager->persist($order);
-            //$manager->flush();
+            $manager->flush();
             $shoppingCart = null;
 
             $newsListing = $newsRepository->findBy(array(),array('id'=>'DESC'),5,1);

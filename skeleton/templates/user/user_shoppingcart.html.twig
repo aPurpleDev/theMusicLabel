@@ -12,7 +12,7 @@
         {% if shoppingcart is defined %}
             {% for item in shoppingcart %}
 
-                <p class = "lead">{{  item }}</p>
+                <p class = "lead">{{  item }} ({{ item.album.artist.name }})</p>
                 <br>
 
             {% endfor %}
