@@ -4,39 +4,13 @@ namespace App\EventSubscriber;
 
 use App\Event\NewsEvent;
 use App\Event\SubEvent;
-use App\Repository\UserRepository;
-use Swift_Mailer;
-use Swift_Message;
+use App\Event\UnsubEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class NewsUserSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var Swift_Mailer
-     */
-    private $mailer;
 
-    /**
-     * @var
-     */
-    private $adminMail;
-    /**
-     * @var UserRepository
-     */
-    private $userRepository;
-
-    /**
-     * RegisterListener constructor.
-     * @param $mailer
-     */
-    public function __construct(Swift_Mailer $mailer, $adminMail, UserRepository $userRepository)
-    {
-        $this->mailer = $mailer;
-        $this->adminMail = $adminMail;
-        $this->userRepository = $userRepository;
-    }
-
-    public function attach(SubEvent $subEvent)
+    public function sub(SubEvent $subEvent)
     {
         $artist = $subEvent->getArtist();
         $user = $subEvent->getUser();
@@ -47,21 +21,17 @@ class NewsUserSubscriber implements EventSubscriberInterface
 
     public function sendMailNews(NewsEvent $newsEvent)
     {
-//        $user = $newsEvent->getUser();
-//        $news = $newsEvent->getNews();
         $artist = $newsEvent->getArtist();
         $artist->notify();
-//        $users = $this->userRepository->findUserByArtist($news->getArtist());
-//        foreach ($users as $user) {
-//            $user->
-//            $a = (new Swift_Message('Hello '.$user->getFirstName()))
-//                ->setFrom($this->adminMail)
-//                ->setTo($user->getEmail())
-//                ->setBody($news->getContent());
-//
-//            $this->mailer->send($a);
-//        }
+    }
 
+    public function unsub(UnsubEvent $unsubEvent)
+    {
+        $artist = $unsubEvent->getArtist();
+        $user = $unsubEvent->getUser();
+
+        $artist->detach($user);
+        $user->removeArtist($artist);
     }
 
 
@@ -87,11 +57,14 @@ class NewsUserSubscriber implements EventSubscriberInterface
     {
         return [
             SubEvent::NAME => [
-                'attach', -10
+                'sub', -10
             ],
             NewsEvent::NAME => [
                 'sendMailNews', -10
             ],
+            UnsubEvent::NAME => [
+                'unsub', -10
+            ]
         ];
     }
 

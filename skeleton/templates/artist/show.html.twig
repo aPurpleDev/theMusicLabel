@@ -37,13 +37,14 @@
             </tr>
             <tr>
                 {{ form_start(subForm) }}
-                    {{ form_widget(subForm.sub) }}
+                    {{ form_widget(subForm) }}
                 {{ form_end(subForm) }}
             </tr>
         </tbody>
     </table>
     <div>
-{#{{  dump(user.subscriptions) }}#}
+{#{{  dump(artist.subscribers[219]) }}#}
+{#        {{  dump(user) }}#}
 {#        {{  dump(artist.news[0].content) }}#}
     </div>
 
