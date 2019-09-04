@@ -55,11 +55,12 @@ class RegisterUserSubscriber implements EventSubscriberInterface
     public function sendMailOnNewOrder(OrderEvent $event)
     {
         $user = $event->getUser();
+        $order = $event->getOrder();
 
         $a = (new Swift_Message('Hello '.$user->getFirstName()))
             ->setFrom($this->adminMail)
             ->setTo($user->getEmail())
-            ->setBody('Welcome to theMusicLabel Corp, We are pleased to have you joining us, I hope you will enjoy & listen to every tracks available. Greetings.');
+            ->setBody('Thank your for your Order n°.'.$order->getOrderNumber().' d"un montant de : '.$order->getTotalPrice().'. Merci.');
 
         $this->mailer->send($a);
     }
