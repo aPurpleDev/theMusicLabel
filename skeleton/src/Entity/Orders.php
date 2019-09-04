@@ -58,11 +58,11 @@ class Orders
         return $this->orderNumber;
     }
 
-    public function setOrderNumber(int $orderNumber): self
+    public function setOrderNumber(int $orderNumber): int
     {
         $this->orderNumber = $orderNumber;
 
-        return $this;
+        return $orderNumber;
     }
 
     public function getOrderDate(): ?\DateTimeInterface

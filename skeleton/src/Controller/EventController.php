@@ -99,7 +99,7 @@ class EventController extends AbstractController
     /**
      * @Route("/{id}/buy", name="event_buy", methods={"GET","POST"})
      */
-    public function buy(Event $event, ObjectManager $manager): Response
+    public function buy(Event $event, ObjectManager $manager, EventRepository $eventRepository): Response
     {
 
         if ($this->getUser() instanceof User) {
@@ -131,7 +131,7 @@ class EventController extends AbstractController
             //$manager->flush();
 
             return $this->render('event/index.html.twig', [
-                'event' => $event, 'shoppingcart' => $_SESSION["shoppingCart"]
+                'event' => $event, 'shoppingcart' => $_SESSION["shoppingCart"], 'events' => $eventRepository->findAll()
             ]);
         }
 

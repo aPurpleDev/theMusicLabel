@@ -40,7 +40,7 @@ class Album implements BuyableInterface
     private $tracks;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Artist", inversedBy="albums")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Artist", inversedBy="albums", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $artist;

@@ -16,6 +16,9 @@
                 <br>
 
             {% endfor %}
+
+            <a type="submit" id="btn-pay" class="btn btn-success" href="{{ path('user_pay') }}">Pay Order</a>
+
         {% endif %}
 
         {% if shoppingcart is not defined %}

@@ -25,9 +25,9 @@
                 <td>{{ news.artist }}</td>
                 <td>{{ news.publishDate ? news.publishDate|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('news_show', {'id': news.id}) }}">show</a>
-                    {% if is_granted ('ROLE_ADMIN') %}
-                    <a href="{{ path('news_edit', {'id': news.id}) }}">edit</a>
+                    <a class = "btn btn-success" href="{{ path('news_show', {'id': news.id}) }}">show</a>
+                    {% if is_granted ('ROLE_ALLOWED_TO_SWITCH') %}
+                    <a class = "btn btn-warning" href="{{ path('news_edit', {'id': news.id}) }}">edit</a>
                     {% endif %}
                 </td>
             </tr>
