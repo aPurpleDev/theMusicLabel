@@ -64,40 +64,47 @@ class ArtistController extends AbstractController
         $form->handleRequest($request);
         $formUnsub = $this->createForm(UnsubType::class);
         $formUnsub->handleRequest($request);
+        $user = null;
 
 
         if ($this->getUser()) {
             $user = $artistRepository->findSubby($this->getUser()->getId());
-        }
 
-        if($form->get('sub')->isClicked()) {
-            $e = new SubEvent($artist, $this->getUser());
-            $dispatcher->dispatch($e, SubEvent::NAME);
-            $this->getDoctrine()->getManager()->flush();
+            if($form->get('sub')->isClicked()) {
+                $e = new SubEvent($artist, $this->getUser());
+                $dispatcher->dispatch($e, SubEvent::NAME);
+                $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('artist_show', [
-                'id' => $artist->getId(),
+                return $this->redirectToRoute('artist_show', [
+                    'id' => $artist->getId(),
+                    'artist' => $artist,
+                    'subForm' => ($user) ? $formUnsub->createView() : $form->createView()
+                ]);
+            }
+
+            if($formUnsub->get('unsub')->isClicked()) {
+                $e = new UnsubEvent($artist, $this->getUser());
+                $dispatcher->dispatch($e, UnsubEvent::NAME);
+                $this->getDoctrine()->getManager()->flush();
+
+                return $this->redirectToRoute('artist_show', [
+                    'id' => $artist->getId(),
+                    'artist' => $artist,
+                    'subForm' => ($user) ? $formUnsub->createView() : $form->createView()
+                ]);
+            }
+
+            return $this->render('artist/show.html.twig', [
                 'artist' => $artist,
+                'user' => $this->getUser(),
                 'subForm' => ($user) ? $formUnsub->createView() : $form->createView()
             ]);
         }
 
-        if($formUnsub->get('unsub')->isClicked()) {
-            $e = new UnsubEvent($artist, $this->getUser());
-            $dispatcher->dispatch($e, UnsubEvent::NAME);
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('artist_show', [
-                'id' => $artist->getId(),
-                'artist' => $artist,
-                'subForm' => ($user) ? $formUnsub->createView() : $form->createView()
-            ]);
-        }
 
         return $this->render('artist/show.html.twig', [
             'artist' => $artist,
-            'user' => $this->getUser(),
-            'subForm' => ($user) ? $formUnsub->createView() : $form->createView()
+            'user' => $this->getUser()
         ]);
     }
 

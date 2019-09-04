@@ -36,9 +36,11 @@
                     </td>
             </tr>
             <tr>
-                {{ form_start(subForm) }}
+                {% if subForm is defined %}
+                    {{ form_start(subForm) }}
                     {{ form_widget(subForm) }}
-                {{ form_end(subForm) }}
+                    {{ form_end(subForm) }}
+                {% endif %}
             </tr>
         </tbody>
     </table>
