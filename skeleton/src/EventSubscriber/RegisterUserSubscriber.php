@@ -73,9 +73,6 @@ class RegisterUserSubscriber implements EventSubscriberInterface
         return [
             RegisterEvent::NAME => [
                 'sendMailToNewlyRegisteredUser', -10
-            ],
-            OrderEvent::NAME => [
-                'sendMailOnNewOrder', -10
             ]
         ];
     }

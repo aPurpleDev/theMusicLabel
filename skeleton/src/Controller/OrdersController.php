@@ -29,19 +29,22 @@ class OrdersController extends AbstractController
 
     /**
      * @Route("/new", name="orders_new", methods={"GET","POST"})
+     * @param Request $request
+     * @param EventDispatcherInterface $dispatcher
+     * @return Response
      */
-    public function new(Request $request, EventDispatcherInterface $dispatcher): Response
+    public function new(Request $request): Response
     {
         $order = new Orders();
         $form = $this->createForm(OrderType::class, $order);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($order);
             $entityManager->flush();
-            $e = new OrderEvent($order, $this->getUser());
-            $dispatcher->dispatch($e, OrderEvent::NAME);
+
             return $this->redirectToRoute('order_index');
         }
 
