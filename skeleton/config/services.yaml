@@ -34,6 +34,6 @@ services:
     App\Entity\Artist: ~
 
 #    App\Entity\User:
+#        autowire: true
 #        arguments:
-#            $mailer: \Swift_Mailer
 #            $adminMail: 'themusic@label.com'

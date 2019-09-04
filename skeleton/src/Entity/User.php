@@ -65,6 +65,8 @@ class User implements UserInterface, SplObserver
      */
     private $subscriptions = [];
 
+    private $adminMail = 'themusic@label.com';
+
 
     public function __construct()
     {
@@ -233,6 +235,16 @@ class User implements UserInterface, SplObserver
     }
 
     /**
+     * @param Artist $artist
+     */
+    public function removeArtist(Artist $artist)
+    {
+        if (array_key_exists($artist->getId(), $this->subscriptions)) {
+            unset($this->subscriptions[$artist->getId()]);
+        }
+    }
+
+    /**
      * Receive update from subject
      * @link https://php.net/manual/en/splobserver.update.php
      * @param SplSubject $subject <p>
@@ -250,10 +262,9 @@ class User implements UserInterface, SplObserver
         $mailer = new Swift_Mailer($transport);
 
         $a = (new Swift_Message('Hello '.$this->getFirstName()))
-            ->setFrom('test@test.fr')
+            ->setFrom($this->adminMail)
             ->setTo($this->getEmail())
-//            ->setTo('14a0577f61-54f64c@inbox.mailtrap.io')
-            ->setBody('test');
+            ->setBody('News de '.$subject->getName().' '.$subject->getNews()[0]->getTitle().' '.$subject->getNews()[0]->getContent());
         $mailer->send($a);
     }
 }

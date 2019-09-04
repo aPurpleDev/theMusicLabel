@@ -232,10 +232,6 @@ class Artist implements SplSubject
         return $this;
     }
 
-    public function addSub($sub)
-    {
-        $this->subscribers[] = $sub;
-    }
 
     /**
      * Attach an SplObserver
@@ -267,8 +263,8 @@ class Artist implements SplSubject
      */
     public function detach(SplObserver $observer)
     {
-        if (in_array($observer, $this->subscribers)) {
-            unset($this->subscribers[array_search($observer, $this->subscribers)]);
+        if (array_key_exists($observer->getId(), $this->subscribers)) {
+            unset($this->subscribers[$observer->getId()]);
         }
     }
 
@@ -281,7 +277,7 @@ class Artist implements SplSubject
     public function notify()
     {
         foreach ($this->subscribers as $value) {
-            $value->update(new Artist());
+            $value->update($this);
         }
     }
 }
