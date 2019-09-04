@@ -25,7 +25,6 @@ class SubType extends AbstractType
     {
         $builder
             ->add('sub', SubmitType::class, ['label' => 'Sub'])
-//            ->add($this->artist->getId(), HiddenType::class)
         ;
     }
 

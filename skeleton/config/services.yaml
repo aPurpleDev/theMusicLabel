@@ -33,8 +33,7 @@ services:
 
     App\Entity\Artist: ~
 
-    App\Entity\User: ~
-
-    App\EventSubscriber\NewsUserSubscriber:
-        tags:
-            - twig.extension
+#    App\Entity\User:
+#        arguments:
+#            $mailer: \Swift_Mailer
+#            $adminMail: 'themusic@label.com'

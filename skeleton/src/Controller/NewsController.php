@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\News;
+use App\Event\NewsEvent;
 use App\Form\NewsType;
+use App\Repository\ArtistRepository;
 use App\Repository\NewsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,14 +24,17 @@ class NewsController extends AbstractController
     public function index(NewsRepository $newsRepository): Response
     {
         return $this->render('news/index.html.twig', [
-            'news' => $newsRepository->findAll(),
+            'news' => array_reverse($newsRepository->findAll()),
         ]);
     }
 
     /**
      * @Route("/new", name="news_new", methods={"GET","POST"})
+     * @param Request $request
+     * @param EventDispatcherInterface $dispatcher
+     * @return Response
      */
-    public function new(Request $request, EventDispatcherInterface $dispatcher): Response
+    public function new(Request $request, EventDispatcherInterface $dispatcher, ArtistRepository $artistRepository): Response
     {
         $news = new News();
         $form = $this->createForm(NewsType::class, $news);
@@ -39,12 +44,14 @@ class NewsController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($news);
             $entityManager->flush();
+            $artist = $artistRepository->find($news->getArtist());
+            $e = new NewsEvent($artist);
+            $dispatcher->dispatch($e, NewsEvent::NAME);
 
             return $this->redirectToRoute('news_index');
         }
 
-//        $e = new NewsEvent($user);
-//        $dispatcher->dispatch($e, RegisterEvent::NAME);
+
 
         return $this->render('news/new.html.twig', [
             'news' => $news,
