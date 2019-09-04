@@ -8,6 +8,7 @@
     {% block stylesheets %}{% endblock %}
 </head>
 <body>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#"><h1 class="text-success">theMusicLabel</h1></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -68,6 +69,7 @@
         </form>
     </div>
 </nav>
+<div class = "container-fluid">
 
 {% block shoppingcart %}
     {% if app.user %}
@@ -94,5 +96,6 @@
         crossorigin="anonymous"></script>
 {% block body %}{% endblock %}
 {% block javascripts %}{% endblock %}
+</div>
 </body>
 </html>

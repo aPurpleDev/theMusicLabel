@@ -26,13 +26,12 @@ class HomeController extends AbstractController
         $eventListing = $eventRepository->findBy(array(),array('id'=>'DESC'),5,1);
         $userListing = $userRepository->findBy(array(),array('id'=>'DESC'),5,1);
 
-        $shoppingCart;
+        $shoppingCart = null;
 
         if(isset($_SESSION['shoppingCart']))
         {
         $shoppingCart = $_SESSION['shoppingCart'];
         }
-        $shoppingCart = null;
 
         return $this->render('home/index.html.twig',['newslisting' => $newsListing, 'albumlisting' => $albumListing, 'userlisting' => $userListing, 'eventlisting' => $eventListing, 'shoppingcart' => $shoppingCart]);
     }
