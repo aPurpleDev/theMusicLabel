@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% if is_granted('ROLE_ADMIN') %}
+
 {% block title %}User index{% endblock %}
 
 {% block body %}
@@ -7,13 +9,13 @@
 
     <table class="table">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Email</th>
-                <th>Roles</th>
-                <th>Password</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Email</th>
+            <th>Roles</th>
+            <th>Password</th>
+            <th>actions</th>
+        </tr>
         </thead>
         <tbody>
         {% for user in users %}
@@ -37,3 +39,6 @@
 
     <a href="{{ path('user_new') }}">Create new</a>
 {% endblock %}
+    {% endif %}
+
+
