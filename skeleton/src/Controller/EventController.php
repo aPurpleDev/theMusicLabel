@@ -104,23 +104,34 @@ class EventController extends AbstractController
 
         if ($this->getUser() instanceof User) {
             $orderlog = new OrderLog();
-            $order = new Orders();
+            //$order = new Orders();
 
             $orderlog->setEvent($event);
-            $orderlog->setOrdernumber($order);
-            $order->setOrderDate(new \DateTime());
-            $order->setTotalPrice($event->getPrice());
-            $order->setUser($this->getUser());
+            //$orderlog->setOrdernumber($order);
+            //$order->setOrderDate(new \DateTime());
+            //$order->setTotalPrice($event->getPrice());
+            //$order->setUser($this->getUser());
 
             $manager->persist($orderlog);
-            $manager->persist($order);
+            //$manager->persist($order);
             $manager->flush();
 
-            $order->setOrderNumber($orderlog->getId());
-            $manager->flush();
+            if(isset($_SESSION["shoppingCart"]))
+            {
+                $shoppingCart = $_SESSION["shoppingCart"];
+                $shoppingCart[] = $orderlog;
+                $_SESSION["shoppingCart"] = $shoppingCart;
+            }else{
+                $shoppingCart = [];
+                $shoppingCart[] = $orderlog;
+                $_SESSION["shoppingCart"] = $shoppingCart;
+            }
 
-            return $this->render('user/user_orders.html.twig', [
-                'event' => $event, 'orders' => $this->getUser()->getOrders()
+            //$order->setOrderNumber($orderlog->getId());
+            //$manager->flush();
+
+            return $this->render('event/index.html.twig', [
+                'event' => $event, 'shoppingcart' => $_SESSION["shoppingCart"]
             ]);
         }
 

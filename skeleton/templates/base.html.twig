@@ -69,21 +69,18 @@
     </div>
 </nav>
 
+{% block shoppingcart %}
 {% if shoppingcart is defined %}
 
                 <div class= "jumbotron bg-sucess">
                     <h3 class = "text-primary text-right">Your Shopping Cart</h3>
 
-                {% for item in shoppingcart %}
-
-                    <p class="text-right display-10 lead"> {{ item }} </p>
-
-                {% endfor %}
-
+                    <p class="text-right display-10 lead">You have {{ shoppingcart|length }} Items in your cart</p>
 
                 </div>
 
             {% endif %}
+{% endblock %}
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
