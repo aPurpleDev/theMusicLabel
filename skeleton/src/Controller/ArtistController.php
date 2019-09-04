@@ -9,6 +9,7 @@ use App\Form\ArtistType;
 use App\Form\SubType;
 use App\Form\UnsubType;
 use App\Repository\ArtistRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -57,7 +58,7 @@ class ArtistController extends AbstractController
     /**
      * @Route("/{id}", name="artist_show", methods={"GET", "POST"})
      */
-    public function show(Request $request, Artist $artist, EventDispatcherInterface $dispatcher, ArtistRepository $artistRepository): Response
+    public function show(Request $request, Artist $artist, EventDispatcherInterface $dispatcher, UserRepository $userRepository): Response
     {
 
         $form = $this->createForm(SubType::class);
@@ -68,7 +69,7 @@ class ArtistController extends AbstractController
 
 
         if ($this->getUser()) {
-            $user = $artistRepository->findSubby($this->getUser()->getId());
+            $user = $userRepository->findSubby($artist->getId());
 
             if($form->get('sub')->isClicked()) {
                 $e = new SubEvent($artist, $this->getUser());
@@ -78,7 +79,7 @@ class ArtistController extends AbstractController
                 return $this->redirectToRoute('artist_show', [
                     'id' => $artist->getId(),
                     'artist' => $artist,
-                    'subForm' => ($user) ? $formUnsub->createView() : $form->createView()
+                    'subForm' => $formUnsub->createView()
                 ]);
             }
 
@@ -90,15 +91,24 @@ class ArtistController extends AbstractController
                 return $this->redirectToRoute('artist_show', [
                     'id' => $artist->getId(),
                     'artist' => $artist,
-                    'subForm' => ($user) ? $formUnsub->createView() : $form->createView()
+                    'subForm' => $form->createView()
                 ]);
             }
 
-            return $this->render('artist/show.html.twig', [
-                'artist' => $artist,
-                'user' => $this->getUser(),
-                'subForm' => ($user) ? $formUnsub->createView() : $form->createView()
-            ]);
+            if ($user) {
+                return $this->render('artist/show.html.twig', [
+                    'artist' => $artist,
+                    'user' => $this->getUser(),
+                    'subForm' => $formUnsub->createView()
+                ]);
+            } else {
+                return $this->render('artist/show.html.twig', [
+                    'artist' => $artist,
+                    'user' => $this->getUser(),
+                    'subForm' => $form->createView()
+                ]);
+            }
+
         }
 
 
