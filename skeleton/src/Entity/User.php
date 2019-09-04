@@ -7,6 +7,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use SplObserver;
 use SplSubject;
+use Swift_Mailer;
+use Swift_Message;
+use Swift_SmtpTransport;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -61,6 +64,7 @@ class User implements UserInterface, SplObserver
      * @ORM\Column(type="array", nullable=true)
      */
     private $subscriptions = [];
+
 
     public function __construct()
     {
@@ -239,6 +243,17 @@ class User implements UserInterface, SplObserver
      */
     public function update(SplSubject $subject)
     {
-        $this->subscriptions[] = $subject->getNews()[0];
+        $transport = (new Swift_SmtpTransport('smtp.mailtrap.io', 25))
+            ->setUsername('6198a07b125851')
+            ->setPassword('849b435a062100');
+
+        $mailer = new Swift_Mailer($transport);
+
+        $a = (new Swift_Message('Hello '.$this->getFirstName()))
+            ->setFrom('test@test.fr')
+            ->setTo($this->getEmail())
+//            ->setTo('14a0577f61-54f64c@inbox.mailtrap.io')
+            ->setBody('test');
+        $mailer->send($a);
     }
 }

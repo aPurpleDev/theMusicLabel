@@ -2,32 +2,66 @@
 
 namespace App\EventSubscriber;
 
-//use App\Entity\Artist;
 use App\Event\NewsEvent;
-//use SplObserver;
-//use SplSubject;
+use App\Event\SubEvent;
+use App\Repository\UserRepository;
+use Swift_Mailer;
+use Swift_Message;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Twig\Extension\AbstractExtension;
-use Twig\TwigFunction;
 
-class NewsUserSubscriber extends AbstractExtension implements EventSubscriberInterface
+class NewsUserSubscriber implements EventSubscriberInterface
 {
+    /**
+     * @var Swift_Mailer
+     */
+    private $mailer;
 
-    public function getFunctions()
+    /**
+     * @var
+     */
+    private $adminMail;
+    /**
+     * @var UserRepository
+     */
+    private $userRepository;
+
+    /**
+     * RegisterListener constructor.
+     * @param $mailer
+     */
+    public function __construct(Swift_Mailer $mailer, $adminMail, UserRepository $userRepository)
     {
-        return array(
-            new TwigFunction('attach', array($this, 'attach')),
-        );
+        $this->mailer = $mailer;
+        $this->adminMail = $adminMail;
+        $this->userRepository = $userRepository;
     }
 
-
-    public function attach(NewsEvent $newsEvent)
+    public function attach(SubEvent $subEvent)
     {
-        $artist = $newsEvent->getArtist();
-        $user = $newsEvent->getUser();
+        $artist = $subEvent->getArtist();
+        $user = $subEvent->getUser();
 
         $artist->attach($user);
         $user->addArtist($artist);
+    }
+
+    public function sendMailNews(NewsEvent $newsEvent)
+    {
+//        $user = $newsEvent->getUser();
+//        $news = $newsEvent->getNews();
+        $artist = $newsEvent->getArtist();
+        $artist->notify();
+//        $users = $this->userRepository->findUserByArtist($news->getArtist());
+//        foreach ($users as $user) {
+//            $user->
+//            $a = (new Swift_Message('Hello '.$user->getFirstName()))
+//                ->setFrom($this->adminMail)
+//                ->setTo($user->getEmail())
+//                ->setBody($news->getContent());
+//
+//            $this->mailer->send($a);
+//        }
+
     }
 
 
@@ -52,11 +86,13 @@ class NewsUserSubscriber extends AbstractExtension implements EventSubscriberInt
     public static function getSubscribedEvents()
     {
         return [
-            NewsEvent::NAME => [
+            SubEvent::NAME => [
                 'attach', -10
+            ],
+            NewsEvent::NAME => [
+                'sendMailNews', -10
             ],
         ];
     }
-
 
 }

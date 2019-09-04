@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Artist;
-use App\Event\NewsEvent;
+use App\Event\SubEvent;
 use App\Form\ArtistType;
 use App\Form\SubType;
 use App\Repository\ArtistRepository;
@@ -63,8 +63,8 @@ class ArtistController extends AbstractController
 
 
         if($form->get('sub')->isClicked()) {
-            $e = new NewsEvent($artist, $this->getUser());
-            $dispatcher->dispatch($e, NewsEvent::NAME);
+            $e = new SubEvent($artist, $this->getUser());
+            $dispatcher->dispatch($e, SubEvent::NAME);
             $this->getDoctrine()->getManager()->flush();
         }
 
