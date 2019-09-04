@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Orders;
+use App\Event\OrderEvent;
 use App\Form\OrderType;
 use App\Repository\OrderRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @Route("/orders")
@@ -27,6 +29,9 @@ class OrdersController extends AbstractController
 
     /**
      * @Route("/new", name="orders_new", methods={"GET","POST"})
+     * @param Request $request
+     * @param EventDispatcherInterface $dispatcher
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -35,6 +40,7 @@ class OrdersController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($order);
             $entityManager->flush();

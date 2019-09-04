@@ -29,7 +29,7 @@ class Orders
     private $orderDate;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     private $totalPrice;
 

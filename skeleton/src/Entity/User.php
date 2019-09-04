@@ -78,6 +78,11 @@ class User implements UserInterface, SplObserver
         return $this->id;
     }
 
+    public function __toString()
+    {
+        return (string) $this->id;
+    }
+
     public function getEmail(): ?string
     {
         return $this->email;

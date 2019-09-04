@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Album;
 use App\Entity\Orders;
 use App\Entity\User;
+use App\Event\OrderEvent;
 use App\Form\UserType;
 use App\Repository\AlbumRepository;
 use App\Repository\EventRepository;
@@ -15,6 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @Route("/user")
@@ -59,7 +61,7 @@ class UserController extends AbstractController
     /**
      * @Route("/myshoppingcart/pay", name="user_pay", methods={"GET"})
      */
-    public function payShoppingCart(ObjectManager $manager, NewsRepository $newsRepository, AlbumRepository $albumRepository, EventRepository $eventRepository ,UserRepository $userRepository): Response
+    public function payShoppingCart(ObjectManager $manager, NewsRepository $newsRepository, EventDispatcherInterface $dispatcher, AlbumRepository $albumRepository, EventRepository $eventRepository ,UserRepository $userRepository): Response
     {
        if(isset($_SESSION["shoppingCart"]))
         {
@@ -96,6 +98,8 @@ class UserController extends AbstractController
             $order->setTotalPrice((int)$totalPrice);
             $manager->persist($order);
             $manager->flush();
+            $e = new OrderEvent($order, $this->getUser());
+            $dispatcher->dispatch($e, OrderEvent::NAME);
             $shoppingCart = null;
             unset($_SESSION["shoppingCart"]);
 
