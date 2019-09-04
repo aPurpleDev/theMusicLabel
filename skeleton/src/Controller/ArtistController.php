@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Artist;
+use App\Event\NewsEvent;
 use App\Form\ArtistType;
+use App\Form\SubType;
 use App\Repository\ArtistRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,6 +25,7 @@ class ArtistController extends AbstractController
     {
         return $this->render('artist/index.html.twig', [
             'artists' => $artistRepository->findAll(),
+            'user' => $this->getUser()
         ]);
     }
 
@@ -49,12 +53,25 @@ class ArtistController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="artist_show", methods={"GET"})
+     * @Route("/{id}", name="artist_show", methods={"GET", "POST"})
      */
-    public function show(Artist $artist): Response
+    public function show(Request $request, Artist $artist,  EventDispatcherInterface $dispatcher): Response
     {
+
+        $form = $this->createForm(SubType::class);
+        $form->handleRequest($request);
+
+
+        if($form->get('sub')->isClicked()) {
+            $e = new NewsEvent($artist, $this->getUser());
+            $dispatcher->dispatch($e, NewsEvent::NAME);
+            $this->getDoctrine()->getManager()->flush();
+        }
+
         return $this->render('artist/show.html.twig', [
             'artist' => $artist,
+            'user' => $this->getUser(),
+            'subForm' => $form->createView(),
         ]);
     }
 

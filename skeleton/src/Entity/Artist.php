@@ -5,12 +5,14 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
+use SplObserver;
+use SplSubject;
+use Symfony\Component\Validator\Constraint as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArtistRepository")
  */
-class Artist
+class Artist implements SplSubject
 {
     /**
      * @ORM\Id()
@@ -55,6 +57,11 @@ class Artist
      */
     private $events;
 
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $subscribers = [];
+
     public function __construct()
     {
         $this->albums = new ArrayCollection();
@@ -70,6 +77,11 @@ class Artist
     public function getName(): ?string
     {
         return $this->name;
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
     }
 
     public function setName(string $name): self
@@ -208,8 +220,68 @@ class Artist
         return $this;
     }
 
-    public function __toString()
+    public function getSubscribers(): ?array
     {
-        return $this->getName();
+        return $this->subscribers;
+    }
+
+    public function setSubscribers(?array $subscribers): self
+    {
+        $this->subscribers = $subscribers;
+
+        return $this;
+    }
+
+    public function addSub($sub)
+    {
+        $this->subscribers[] = $sub;
+    }
+
+    /**
+     * Attach an SplObserver
+     * @link https://php.net/manual/en/splsubject.attach.php
+     * @param SplObserver $observer <p>
+     * The <b>SplObserver</b> to attach.
+     * </p>
+     * @return void
+     * @since 5.1.0
+     */
+    public function attach(SplObserver $observer)
+    {
+        if (empty($this->subscribers)) {
+            $this->subscribers[$observer->getId()] = $observer;
+        }
+        if (!in_array($observer, $this->subscribers)) {
+            $this->subscribers[$observer->getId()] = $observer;
+        }
+    }
+
+    /**
+     * Detach an observer
+     * @link https://php.net/manual/en/splsubject.detach.php
+     * @param SplObserver $observer <p>
+     * The <b>SplObserver</b> to detach.
+     * </p>
+     * @return void
+     * @since 5.1.0
+     */
+    public function detach(SplObserver $observer)
+    {
+        if (in_array($observer, $this->subscribers)) {
+            unset($this->subscribers[array_search($observer, $this->subscribers)]);
+        }
+    }
+
+    /**
+     * Notify an observer
+     * @link https://php.net/manual/en/splsubject.notify.php
+     * @return void
+     * @since 5.1.0
+     */
+    public function notify()
+    {
+        foreach ($this->subscribers as $value) {
+            $value->update(new Artist());
+        }
     }
 }
