@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Album;
 use App\Entity\Orders;
 use App\Entity\User;
 use App\Form\UserType;
@@ -74,30 +75,43 @@ class UserController extends AbstractController
 
             foreach($shoppingCart as $value)
             {
+                if($value->getAlbum() != null) {
+                    $a = $albumRepository->find($value->getAlbum()->getId());
+                    $value->setAlbum($a);
+                    $order->addOrderLog($value);
+                    $manager->flush();
+                    $totalPrice += $a->getPrice();
+                }
 
-                $a = $albumRepository->find($value->getAlbum()->getId());
-                $value->setAlbum($a);
-                $order->addOrderLog($value);
-                $manager->flush();
-                $totalPrice += 10;
+                if($value->getEvent() != null)
+                {
+                    $e = $eventRepository->find($value->getEvent()->getId());
+                    $value->setEvent($e);
+                    $order->addOrderLog($value);
+                    $manager->flush();
+                    $totalPrice += $e->getPrice();
+                }
             }
 
             $order->setTotalPrice((int)$totalPrice);
             $manager->persist($order);
             $manager->flush();
             $shoppingCart = null;
+            unset($_SESSION["shoppingCart"]);
 
             $newsListing = $newsRepository->findBy(array(),array('id'=>'DESC'),5,1);
             $albumListing = $albumRepository->findBy(array(),array('id'=>'DESC'),5,1);
             $eventListing = $eventRepository->findBy(array(),array('id'=>'DESC'),5,1);
             $userListing = $userRepository->findBy(array(),array('id'=>'DESC'),5,1);
 
+            $message = 'Your order has been paid. Total: ' . $order->getTotalPrice() . ' €. An email confirmation has been sent to ' . $this->getUser()->getEmail() . ". Thank you! 💜";
+
+            echo '<div class = "alert alert-success"><script class = type="text/javascript">window.alert("'.$message.'");</script></div>';
+
             return $this->render('home/index.html.twig',['newslisting' => $newsListing, 'albumlisting' => $albumListing, 'userlisting' => $userListing, 'eventlisting' => $eventListing, 'shoppingcart' => $shoppingCart, 'order' => $order]);
         }
 
-        echo '<script type="text/javascript">window.alert("Cart is Empty. Returning to Homepage")</script>';
-
-        return $this->redirectToRoute('app_login');
+        return $this->redirectToRoute('home');
     }
 
     /**
