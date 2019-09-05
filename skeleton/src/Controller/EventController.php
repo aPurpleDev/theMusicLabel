@@ -98,7 +98,7 @@ class EventController extends AbstractController
      */
     public function delete(Request $request, Event $event): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$event->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $event->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($event);
             $entityManager->flush();
@@ -116,27 +116,24 @@ class EventController extends AbstractController
      */
     public function buy(Event $event, ObjectManager $manager, EventRepository $eventRepository): Response
     {
-
+        //add an orderlog (command line) containing an instance of the event object bought
         if ($this->getUser() instanceof User) {
-            $orderLog = new OrderLog();
+            $orderlog = new OrderLog();
 
-            $orderLog->setEvent($event);
+            $orderlog->setEvent($event);
 
-
-            $manager->persist($orderLog);
+            $manager->persist($orderlog);
             $manager->flush();
 
-            if(isset($_SESSION["shoppingCart"]))
-            {
+            if (isset($_SESSION["shoppingCart"])) {
                 $shoppingCart = $_SESSION["shoppingCart"];
-                $shoppingCart[] = $orderLog;
+                $shoppingCart[] = $orderlog;
                 $_SESSION["shoppingCart"] = $shoppingCart;
-            }else{
+            } else {
                 $shoppingCart = [];
-                $shoppingCart[] = $orderLog;
+                $shoppingCart[] = $orderlog;
                 $_SESSION["shoppingCart"] = $shoppingCart;
             }
-
 
             return $this->render('event/index.html.twig', [
                 'event' => $event, 'shoppingcart' => $_SESSION["shoppingCart"], 'events' => $eventRepository->findAll()

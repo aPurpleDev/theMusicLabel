@@ -41,5 +41,5 @@ class NewsEvent extends Event
         return $this->artist;
     }
 
-    
+
 }

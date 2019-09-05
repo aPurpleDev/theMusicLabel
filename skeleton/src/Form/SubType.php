@@ -22,8 +22,7 @@ class SubType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('sub', SubmitType::class, ['label' => 'Sub'])
-        ;
+            ->add('sub', SubmitType::class, ['label' => 'Sub']);
     }
 
     /**

@@ -16,7 +16,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 /**
  * @Route("/news")
  */
-class NewsController extends AbstractController
+class NewsController extends AbstractController //standard Symfony Controller
 {
     /**
      * @Route("/", name="news_index", methods={"GET"})
@@ -53,7 +53,6 @@ class NewsController extends AbstractController
 
             return $this->redirectToRoute('news_index');
         }
-
 
 
         return $this->render('news/new.html.twig', [
@@ -105,7 +104,7 @@ class NewsController extends AbstractController
      */
     public function delete(Request $request, News $news): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$news->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $news->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($news);
             $entityManager->flush();

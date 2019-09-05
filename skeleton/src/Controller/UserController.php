@@ -29,8 +29,7 @@ class UserController extends AbstractController
     public function myOrders(): Response
     {
 
-        if($this->getUser())
-        {
+        if ($this->getUser()) {
             $user = $this->getUser();
             return $this->render('user/user_orders.html.twig', [
                 'orders' => $user->getOrders()
@@ -45,9 +44,8 @@ class UserController extends AbstractController
      */
     public function myShoppingCart(): Response
     {
-
-        if(isset($_SESSION["shoppingCart"]))
-        {
+        //dedicated view for user's shoppingCart: orderlog created by user not persisted as order yet
+        if (isset($_SESSION["shoppingCart"])) {
             return $this->render('user/user_shoppingcart.html.twig', [
                 'shoppingcart' => $_SESSION["shoppingCart"]
             ]);
@@ -69,23 +67,22 @@ class UserController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    public function payShoppingCart(ObjectManager $manager, NewsRepository $newsRepository, EventDispatcherInterface $dispatcher, AlbumRepository $albumRepository, EventRepository $eventRepository ,UserRepository $userRepository): Response
+    public function payShoppingCart(ObjectManager $manager, NewsRepository $newsRepository, EventDispatcherInterface $dispatcher, AlbumRepository $albumRepository, EventRepository $eventRepository, UserRepository $userRepository): Response
     {
-       if(isset($_SESSION["shoppingCart"]))
-        {
+        //persists user's orderlog as an order object, and populate it in the database after clearing user's shoppingcart
+        if (isset($_SESSION["shoppingCart"])) {
             $order = new Orders();
             $order->setUser($this->getUser());
             $order->setOrderDate(new DateTime());
-            $order->setOrderNumber($order->getId() + rand(100,1000000));
+            $order->setOrderNumber($order->getId() + rand(100, 1000000));
             $manager->persist($order);
             $manager->flush();
 
             $shoppingCart = $_SESSION["shoppingCart"];
             $totalPrice = 0;
 
-            foreach($shoppingCart as $value)
-            {
-                if($value->getAlbum() != null) {
+            foreach ($shoppingCart as $value) {
+                if ($value->getAlbum() != null) {
                     $a = $albumRepository->find($value->getAlbum()->getId());
                     $value->setAlbum($a);
                     $order->addOrderLog($value);
@@ -93,8 +90,7 @@ class UserController extends AbstractController
                     $totalPrice += $a->getPrice();
                 }
 
-                if($value->getEvent() != null)
-                {
+                if ($value->getEvent() != null) {
                     $e = $eventRepository->find($value->getEvent()->getId());
                     $value->setEvent($e);
                     $order->addOrderLog($value);
@@ -111,16 +107,16 @@ class UserController extends AbstractController
             $shoppingCart = null;
             unset($_SESSION["shoppingCart"]);
 
-            $newsListing = $newsRepository->findBy(array(),array('id'=>'DESC'),5,1);
-            $albumListing = $albumRepository->findBy(array(),array('id'=>'DESC'),5,1);
-            $eventListing = $eventRepository->findBy(array(),array('id'=>'DESC'),5,1);
-            $userListing = $userRepository->findBy(array(),array('id'=>'DESC'),5,1);
+            $newsListing = $newsRepository->findBy(array(), array('id' => 'DESC'), 5, 1);
+            $albumListing = $albumRepository->findBy(array(), array('id' => 'DESC'), 5, 1);
+            $eventListing = $eventRepository->findBy(array(), array('id' => 'DESC'), 5, 1);
+            $userListing = $userRepository->findBy(array(), array('id' => 'DESC'), 5, 1);
 
             $message = 'Your order has been paid. Total: ' . $order->getTotalPrice() . ' €. An email confirmation has been sent to ' . $this->getUser()->getEmail() . ". Thank you! 💜";
 
-            echo '<div class = "alert alert-success"><script class = type="text/javascript">window.alert("'.$message.'");</script></div>';
+            echo '<div class = "alert alert-success"><script class = type="text/javascript">window.alert("' . $message . '");</script></div>';
 
-            return $this->render('home/index.html.twig',['newslisting' => $newsListing, 'albumlisting' => $albumListing, 'userlisting' => $userListing, 'eventlisting' => $eventListing, 'shoppingcart' => $shoppingCart, 'order' => $order]);
+            return $this->render('home/index.html.twig', ['newslisting' => $newsListing, 'albumlisting' => $albumListing, 'userlisting' => $userListing, 'eventlisting' => $eventListing, 'shoppingcart' => $shoppingCart, 'order' => $order]);
         }
 
         return $this->redirectToRoute('home');

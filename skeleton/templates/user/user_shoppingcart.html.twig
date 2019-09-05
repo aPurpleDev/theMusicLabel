@@ -6,13 +6,13 @@
 
 {% block body %}
 
-    <div class = "jumbotron text-center">
-        <h1 class = "text-success">My Shopping Cart</h1>
+    <div class="jumbotron text-center">
+        <h1 class="text-success">My Shopping Cart</h1>
 
         {% if shoppingcart is defined %}
             {% for item in shoppingcart %}
 
-                <p class = "lead">{{  item }} </p>
+                <p class="lead">{{ item }} </p>
                 <br>
 
             {% endfor %}
@@ -22,7 +22,7 @@
         {% endif %}
 
         {% if shoppingcart is not defined %}
-        <p class = "lead text-danger">Your shopping Cart is empty.</p>
+            <p class="lead text-danger">Your shopping Cart is empty.</p>
         {% endif %}
 
     </div>

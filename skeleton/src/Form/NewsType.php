@@ -23,8 +23,7 @@ class NewsType extends AbstractType
             ->add('title')
             ->add('content')
             ->add('publishDate')
-            ->add('artist')
-        ;
+            ->add('artist');
     }
 
     /**

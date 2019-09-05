@@ -65,9 +65,6 @@ class User implements UserInterface, SplObserver
      */
     private $subscriptions = [];
 
-    /**
-     * @var string
-     */
     private $adminMail = 'themusic@label.com';
 
 

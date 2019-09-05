@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\OrderLogRepository")
  */
-class OrderLog
+class OrderLog //standard Symfony Entity with a redefined __toString()
 {
     /**
      * @ORM\Id()
@@ -103,14 +103,12 @@ class OrderLog
     {
         $orderlogcontent = '';
 
-        if($orderlogcontent === null)
-        {
-        $orderlogcontent = "Items in cart: ";
+        if ($orderlogcontent === null) {
+            $orderlogcontent = "Items in cart: ";
         }
 
-        if($this->getAlbum() != null)
-        {
-        $orderlogcontent .= $this->getAlbum();
+        if ($this->getAlbum() != null) {
+            $orderlogcontent .= $this->getAlbum();
         }
 
         $orderlogcontent .= $this->getEvent();

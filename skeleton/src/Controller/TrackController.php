@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/track")
  */
-class TrackController extends AbstractController
+class TrackController extends AbstractController //standard Symfony Controller
 {
     /**
      * @Route("/", name="track_index", methods={"GET"})
@@ -95,7 +95,7 @@ class TrackController extends AbstractController
      */
     public function delete(Request $request, Track $track): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$track->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $track->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($track);
             $entityManager->flush();

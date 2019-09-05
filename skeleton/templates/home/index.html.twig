@@ -2,126 +2,140 @@
 
 {% block body %}
 
-    <h4 class="bg-success text-center display-4 text-light">Welcome {% if app.user %}🔥{{ app.user.firstname }}🔥{% endif %}
+    <h4 class="bg-success text-center display-4 text-light">
+        Welcome {% if app.user %}🔥{{ app.user.firstname }}🔥{% endif %}
 
     </h4>
+
+
+
     {% if app.user == false %}
-        <div class="jumbotron" style="background-image: url(https://wallpapercave.com/wp/eee9H8z.jpg); background-size: 100%;">
-        <div class="card rounded">
-            <div class="card-header">
-                <h2 class="text-success text-center display-6">Connect</h2>
+        <div class="jumbotron"
+             style="background-image: url(https://wallpapercave.com/wp/eee9H8z.jpg); background-size: 100%;">
+            <div class="card rounded">
+                <div class="card-header">
+                    <h2 class="text-success text-center display-6">Connect</h2>
+                </div>
+                <div class="card-body text-center bg-transparent">
+                    <h5 class="card-title">Connect to your account and plug into your favorite Artists</h5>
+                    <p class="card-text">Top prices for Albums and Events</p>
+                    <a href="{{ path('app_login') }}" class="btn btn-primary align-center">LOGIN</a>
+                </div>
             </div>
-            <div class="card-body text-center bg-transparent">
-                <h5 class="card-title">Connect to your account and plug into your favorite Artists</h5>
-                <p class="card-text">Top prices for Albums and Events</p>
-                <a href="{{ path('app_login') }}" class="btn btn-primary align-center">LOGIN</a>
-            </div>
-        </div>
         </div>
 
-        <div class="jumbotron" style="background-image: url(http://static.hdw.eweb4.com/media/wallpapers_dl/1/140/1394335-abstract-music-art.jpg); background-size: 100%;">
-        <div class="card rounded">
-            <div class="card-header">
-                <h2 class="text-success text-center display-6">Register</h2>
+        <div class="jumbotron"
+             style="background-image: url(http://static.hdw.eweb4.com/media/wallpapers_dl/1/140/1394335-abstract-music-art.jpg); background-size: 100%;">
+            <div class="card rounded">
+                <div class="card-header">
+                    <h2 class="text-success text-center display-6">Register</h2>
+                </div>
+                <div class="card-body text-center bg-transparent">
+                    <h5 class="card-title">Join millions WorldWide in the newest Music Hub</h5>
+                    <p class="card-text">Partake in the Musical fun</p>
+                    <a href="{{ path('app_register') }}" class="btn btn-primary align-center">REGISTER</a>
+                </div>
             </div>
-            <div class="card-body text-center bg-transparent">
-                <h5 class="card-title">Join millions WorldWide in the newest Music Hub</h5>
-                <p class="card-text">Partake in the Musical fun</p>
-                <a href="{{ path('app_register') }}" class="btn btn-primary align-center">REGISTER</a>
-            </div>
-        </div>
         </div>
     {% endif %}
 
 
-        <div class = "text-center">
-    <h4 class = "bg-info text-light display-6">Latest News</h4></div>
+    <div class="jumbotron bg-transparent">
+        <div class="text-center">
+            <h4 class="bg-info text-light display-6">Latest News</h4></div>
 
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>Title</th>
-            <th>Date</th>
-            <th>Artist</th>
-            <th>Content</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for news in newslisting %}
+        <table class="table table-hover">
+            <thead>
             <tr>
-                <td>{{ news.title }}</td>
-                <td>{{ news.publishDate|date('Y-m-d H:i:s')}}</td>
-                <td>{{ news.artist }}</td>
-                <td>{{ news.content }}</td>
-                <td>
-                    <a class = "btn btn-info" href="{{ path('news_show', {'id': news.id}) }}">View</a>
-                </td>
+                <th>Title</th>
+                <th>Date</th>
+                <th>Artist</th>
+                <th>Content</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <hr class = "bg-secondary">
+            </thead>
+            <tbody>
+            {% for news in newslisting %}
+                <tr>
+                    <td>{{ news.title }}</td>
+                    <td>{{ news.publishDate|date('Y-m-d H:i:s') }}</td>
+                    <td>{{ news.artist }}</td>
+                    <td>{{ news.content }}</td>
+                    <td>
+                        <a class="btn btn-info" href="{{ path('news_show', {'id': news.id}) }}">View</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <hr class="bg-secondary">
+    </div>
 
-    <div class = "text-center">
-        <h4 class = "bg-info text-light display-6">Newest Albums</h4></div>
+    <div class="jumbotron bg-transparent">
+        <div class="text-center">
+            <h4 class="bg-info text-light display-6">Newest Albums</h4></div>
 
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>Title</th>
-            <th>Date</th>
-            <th>Artist</th>
-            <th>Price</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for album in albumlisting %}
+        <table class="table table-hover">
+            <thead>
             <tr>
-                <td>{{ album.title }}</td>
-                <td>{{ album.releaseDate|date('Y-m-d H:i:s')}}</td>
-                <td>{{ album.artist }}</td>
-                <td>{{ album.price }} €</td>
-                <td>
-                    <a class = "btn btn-info" href="{{ path('album_show', {'id': album.id}) }}">Show</a>
-                    <a type="submit" id="btn-buy" class="btn btn-success" href="{{ path('album_buy', {'id': album.id}) }}">Buy</a>
-                </td>
+                <th>Title</th>
+                <th>Date</th>
+                <th>Artist</th>
+                <th>Price</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <hr class = "bg-secondary">
+            </thead>
+            <tbody>
+            {% for album in albumlisting %}
+                <tr>
+                    <td>{{ album.title }}</td>
+                    <td>{{ album.releaseDate|date('Y-m-d H:i:s') }}</td>
+                    <td>{{ album.artist }}</td>
+                    <td>{{ album.price }} €</td>
+                    <td>
+                        <a class="btn btn-info" href="{{ path('album_show', {'id': album.id}) }}">Show</a>
+                        <a type="submit" id="btn-buy" class="btn btn-success"
+                           href="{{ path('album_buy', {'id': album.id}) }}">Buy</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <hr class="bg-secondary">
+    </div>
 
-    <div class = "text-center">
-    <h4 class = "bg-info text-light display-6">Upcoming Events</h4></div>
+    <div class="jumbotron bg-transparent">
+        <div class="text-center">
+            <h4 class="bg-info text-light display-6">Upcoming Events</h4></div>
 
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Artist</th>
-            <th>Start date</th>
-            <th>End date</th>
-            <th>City</th>
-            <th>Price</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for event in eventlisting %}
+        <table class="table table-hover">
+            <thead>
             <tr>
-                <td>{{ event.name }}</td>
-                <td>{{ event.artist }}</td>
-                <td>{{ event.startDate|date('Y-m-d H:i:s')}}</td>
-                <td>{{ event.endDate|date('Y-m-d H:i:s')}}</td>
-                <td>{{ event.artist }}</td>
-                <td>{{ event.price }} €</td>
-                <td>
-                    <a class = "btn btn-info" href="{{ path('event_show', {'id': event.id}) }}">View</a>
-                    <a type="submit" id="btn-buy" class="btn btn-success" href="{{ path('event_buy', {'id': event.id}) }}">Buy</a>
-                </td>
+                <th>Name</th>
+                <th>Artist</th>
+                <th>Start date</th>
+                <th>End date</th>
+                <th>City</th>
+                <th>Price</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <hr class = "bg-secondary">
+            </thead>
+            <tbody>
+            {% for event in eventlisting %}
+                <tr>
+                    <td>{{ event.name }}</td>
+                    <td>{{ event.artist }}</td>
+                    <td>{{ event.startDate|date('Y-m-d H:i:s') }}</td>
+                    <td>{{ event.endDate|date('Y-m-d H:i:s') }}</td>
+                    <td>{{ event.artist }}</td>
+                    <td>{{ event.price }} €</td>
+                    <td>
+                        <a class="btn btn-info" href="{{ path('event_show', {'id': event.id}) }}">View</a>
+                        <a type="submit" id="btn-buy" class="btn btn-success"
+                           href="{{ path('event_buy', {'id': event.id}) }}">Buy</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <hr class="bg-secondary">
+    </div>
 
 {% endblock %}

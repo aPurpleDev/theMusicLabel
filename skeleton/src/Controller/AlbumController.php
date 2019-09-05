@@ -116,27 +116,23 @@ class AlbumController extends AbstractController
      */
     public function buy(Album $album, ObjectManager $manager, AlbumRepository $albumRepository): Response
     {
-
+        //Create an Orderlog (command line) linked to current user, adding an album object as purchase.
         if ($this->getUser() instanceof User) {
 
-            $orderLog = new OrderLog();
-            $orderLog->setAlbum($album);
-
-            $manager->persist($orderLog);
+            $orderlog = new OrderLog();
+            $orderlog->setAlbum($album);
+            $manager->persist($orderlog);
             $manager->flush();
 
-            if(isset($_SESSION["shoppingCart"]))
-            {
-            $shoppingCart = $_SESSION["shoppingCart"];
-            $shoppingCart[] = $orderLog;
-            $_SESSION["shoppingCart"] = $shoppingCart;
+            if (isset($_SESSION["shoppingCart"])) {
+                $shoppingCart = $_SESSION["shoppingCart"];
+                $shoppingCart[] = $orderlog;
+                $_SESSION["shoppingCart"] = $shoppingCart;
+            } else {
+                $shoppingCart = [];
+                $shoppingCart[] = $orderlog;
+                $_SESSION["shoppingCart"] = $shoppingCart;
             }
-            else{
-            $shoppingCart = [];
-            $shoppingCart[] = $orderLog;
-            $_SESSION["shoppingCart"] = $shoppingCart;
-            }
-
 
             return $this->render('album/index.html.twig', [
                 'album' => $album, 'orders' => $this->getUser()->getOrders(), 'shoppingcart' => $_SESSION["shoppingCart"], 'albums' => $albumRepository->findAll()

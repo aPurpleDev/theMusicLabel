@@ -43,10 +43,10 @@ class OrderUserSubscriber implements EventSubscriberInterface
         $user = $event->getUser();
         $order = $event->getOrder();
 
-        $a = (new Swift_Message('Hello '.$user->getFirstName()))
+        $a = (new Swift_Message('Hello ' . $user->getFirstName()))
             ->setFrom($this->adminMail)
             ->setTo($user->getEmail())
-            ->setBody('Thank your for your Order n°.'.$order->getOrderNumber().' d"un montant de : '.$order->getTotalPrice().'. Merci.');
+            ->setBody('Thank your for your Order n°.' . $order->getOrderNumber() . ' d"un montant de : ' . $order->getTotalPrice() . '. Merci.');
 
         $this->mailer->send($a);
     }

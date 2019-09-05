@@ -23,8 +23,7 @@ class OrderType extends AbstractType
             ->add('orderNumber')
             ->add('orderDate')
             ->add('totalPrice')
-            ->add('User')
-        ;
+            ->add('User');
     }
 
     /**

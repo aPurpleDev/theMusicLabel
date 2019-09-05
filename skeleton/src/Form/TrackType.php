@@ -21,8 +21,7 @@ class TrackType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('album')
-        ;
+            ->add('album');
     }
 
     /**

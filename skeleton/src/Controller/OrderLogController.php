@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/orders/log")
  */
-class OrderLogController extends AbstractController
+class OrderLogController extends AbstractController //standard Symfony Controller
 {
     /**
      * @Route("/", name="order_log_index", methods={"GET"})
@@ -95,7 +95,7 @@ class OrderLogController extends AbstractController
      */
     public function delete(Request $request, OrderLog $orderLog): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$orderLog->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $orderLog->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($orderLog);
             $entityManager->flush();

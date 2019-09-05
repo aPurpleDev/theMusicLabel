@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/artist")
  */
-class ArtistController extends AbstractController
+class ArtistController extends AbstractController //standard Symfony Controller
 {
     /**
      * @Route("/", name="artist_index", methods={"GET"})
@@ -80,7 +80,7 @@ class ArtistController extends AbstractController
         if ($this->getUser()) {
             $user = $userRepository->findSubby($artist->getId());
 
-            if($form->get('sub')->isClicked()) {
+            if ($form->get('sub')->isClicked()) {
                 $e = new SubEvent($artist, $this->getUser());
                 $dispatcher->dispatch($e, SubEvent::NAME);
                 $this->getDoctrine()->getManager()->flush();
@@ -92,7 +92,7 @@ class ArtistController extends AbstractController
                 ]);
             }
 
-            if($formUnsub->get('unsub')->isClicked()) {
+            if ($formUnsub->get('unsub')->isClicked()) {
                 $e = new UnsubEvent($artist, $this->getUser());
                 $dispatcher->dispatch($e, UnsubEvent::NAME);
                 $this->getDoctrine()->getManager()->flush();
@@ -158,7 +158,7 @@ class ArtistController extends AbstractController
      */
     public function delete(Request $request, Artist $artist): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$artist->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $artist->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($artist);
             $entityManager->flush();
