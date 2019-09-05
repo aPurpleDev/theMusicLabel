@@ -1,4 +1,4 @@
-Welcome to the theMusicLabel wiki, this is a simple App made by M-Nasuk (https://github.com/M-Nasuk) and myself in 3 days (https://github.com/aPurpleDev).
+Simple Symfony App made by M-Nasuk (https://github.com/M-Nasuk) and myself in 3 days (https://github.com/aPurpleDev).
 
 # Overview 
 
