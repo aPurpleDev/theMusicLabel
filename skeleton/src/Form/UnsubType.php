@@ -13,8 +13,7 @@ class UnsubType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('unsub', SubmitType::class, ['label' => 'Unsub'])
-        ;
+            ->add('unsub', SubmitType::class, ['label' => 'Unsub']);
     }
 
     public function configureOptions(OptionsResolver $resolver)

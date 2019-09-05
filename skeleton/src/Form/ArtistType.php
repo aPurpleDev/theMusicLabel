@@ -15,8 +15,7 @@ class ArtistType extends AbstractType
             ->add('name')
             ->add('country')
             ->add('style')
-            ->add('bio')
-        ;
+            ->add('bio');
     }
 
     public function configureOptions(OptionsResolver $resolver)

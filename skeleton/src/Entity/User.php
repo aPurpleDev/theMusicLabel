@@ -80,7 +80,7 @@ class User implements UserInterface, SplObserver
 
     public function __toString()
     {
-        return (string) $this->id;
+        return (string)$this->id;
     }
 
     public function getEmail(): ?string
@@ -102,7 +102,7 @@ class User implements UserInterface, SplObserver
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**
@@ -129,7 +129,7 @@ class User implements UserInterface, SplObserver
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return (string)$this->password;
     }
 
     public function setPassword(string $password): self
@@ -212,7 +212,6 @@ class User implements UserInterface, SplObserver
     }
 
 
-
     public function getSubscriptions(): ?array
     {
         return $this->subscriptions;
@@ -266,10 +265,10 @@ class User implements UserInterface, SplObserver
 
         $mailer = new Swift_Mailer($transport);
 
-        $a = (new Swift_Message('Hello '.$this->getFirstName()))
+        $a = (new Swift_Message('Hello ' . $this->getFirstName()))
             ->setFrom($this->adminMail)
             ->setTo($this->getEmail())
-            ->setBody('News de '.$subject->getName().' '.$subject->getNews()[0]->getTitle().' '.$subject->getNews()[0]->getContent());
+            ->setBody('News de ' . $subject->getName() . ' ' . $subject->getNews()[0]->getTitle() . ' ' . $subject->getNews()[0]->getContent());
         $mailer->send($a);
     }
 }

@@ -23,10 +23,9 @@ class ArtistRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('a')
             ->where('a.subscribers LIKE :id')
-            ->setParameter('id', '%i:'.$id.'%')
+            ->setParameter('id', '%i:' . $id . '%')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     // /**

@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AlbumRepository")
  */
-class Album implements BuyableInterface
+class Album implements BuyableInterface //standard Symfony Entity with a redefined __toString()
 {
     /**
      * @ORM\Id()
@@ -178,8 +178,8 @@ class Album implements BuyableInterface
 
     public function __toString()
     {
-        return  'Album title: ' . $this->getTitle() . '.' .
-            ' Produced by the artist: ' . $this->getArtist()->getName()  .
+        return 'Album title: ' . $this->getTitle() . '.' .
+            ' Produced by the artist: ' . $this->getArtist()->getName() .
             '. Released at date: ' . $this->getReleaseDate()->format('Y-m-d') .
             '. Price : ' . $this->getPrice() . ' €';
     }

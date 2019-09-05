@@ -7,22 +7,22 @@
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ news.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ news.title }}</td>
-            </tr>
-            <tr>
-                <th>Content</th>
-                <td>{{ news.content }}</td>
-            </tr>
-            <tr>
-                <th>PublishDate</th>
-                <td>{{ news.publishDate ? news.publishDate|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <td>{{ news.id }}</td>
+        </tr>
+        <tr>
+            <th>Title</th>
+            <td>{{ news.title }}</td>
+        </tr>
+        <tr>
+            <th>Content</th>
+            <td>{{ news.content }}</td>
+        </tr>
+        <tr>
+            <th>PublishDate</th>
+            <td>{{ news.publishDate ? news.publishDate|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
         </tbody>
     </table>
 

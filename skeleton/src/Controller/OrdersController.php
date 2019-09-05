@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Orders;
-use App\Event\OrderEvent;
 use App\Form\OrderType;
 use App\Repository\OrderRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,7 +14,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 /**
  * @Route("/orders")
  */
-class OrdersController extends AbstractController
+class OrdersController extends AbstractController //standard Symfony Controller
 {
     /**
      * @Route("/", name="orders_index", methods={"GET"})
@@ -92,7 +91,7 @@ class OrdersController extends AbstractController
      */
     public function delete(Request $request, Orders $order): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$order->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $order->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($order);
             $entityManager->flush();

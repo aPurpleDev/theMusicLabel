@@ -21,13 +21,15 @@ class RegisterListener
      * @var
      */
     private $adminMail;
+
     /**
      * RegisterListener constructor.
      * @param $mailer
      */
     public function __construct(Swift_Mailer $mailer, $adminMail)
     {
-        $this->mailer = $mailer;$this->adminMail;
+        $this->mailer = $mailer;
+        $this->adminMail;
         $this->adminMail = $adminMail;
     }
 
@@ -38,7 +40,7 @@ class RegisterListener
     {
         $user = $event->getUser();
 
-        $message = (new Swift_Message('Hello '.$user->getFirstName()))
+        $message = (new Swift_Message('Hello ' . $user->getFirstName()))
             ->setFrom($this->adminMail)
             ->setTo($user->getEmail())
             ->setBody('Welcome to theMusicLabel Corp, 

@@ -14,8 +14,7 @@ class OrderLogType extends AbstractType
         $builder
             ->add('event')
             ->add('album')
-            ->add('ordernumber')
-        ;
+            ->add('ordernumber');
     }
 
     public function configureOptions(OptionsResolver $resolver)

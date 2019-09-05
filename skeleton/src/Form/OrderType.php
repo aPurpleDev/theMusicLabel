@@ -15,8 +15,7 @@ class OrderType extends AbstractType
             ->add('orderNumber')
             ->add('orderDate')
             ->add('totalPrice')
-            ->add('User')
-        ;
+            ->add('User');
     }
 
     public function configureOptions(OptionsResolver $resolver)

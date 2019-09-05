@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
  */
-class Event implements BuyableInterface
+class Event implements BuyableInterface //standard Symfony Entity with a redefined __toString()
 {
     /**
      * @ORM\Id()
@@ -175,11 +175,11 @@ class Event implements BuyableInterface
 
     public function __toString()
     {
-        return  'Event name: ' . $this->getName() . '.' .
-            ' Performed by the artist: ' . $this->getArtist()->getName()  .
+        return 'Event name: ' . $this->getName() . '.' .
+            ' Performed by the artist: ' . $this->getArtist()->getName() .
             '. Taking place in: ' . $this->getCity() .
             '. Start date: ' . $this->getStartDate()->format('Y-m-d') .
             '. End date: ' . $this->getEndDate()->format('Y-m-d') .
-            '. Price : ' . $this->getPrice() . ' €' ;
+            '. Price : ' . $this->getPrice() . ' €';
     }
 }

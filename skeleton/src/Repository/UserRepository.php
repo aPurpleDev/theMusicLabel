@@ -23,10 +23,9 @@ class UserRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('u')
             ->where('u.subscriptions LIKE :id')
-            ->setParameter('id', '%i:'.$id.'%')
+            ->setParameter('id', '%i:' . $id . '%')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     // /**

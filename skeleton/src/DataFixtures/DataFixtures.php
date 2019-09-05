@@ -12,7 +12,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker;
 
-class DataFixtures extends Fixture
+class DataFixtures extends Fixture //use Faker to populate our database with 100 Artists, 1000 Albums, 10 000 Tracks, 500 Events and 250 News
 {
 
     /**
@@ -27,11 +27,7 @@ class DataFixtures extends Fixture
         $faker = Faker\Factory::create();
 
         $artistArray = [];
-        //$userArray = [];
         $albumArray = [];
-        $trackArray = [];
-        $eventArray = [];
-        $newsArray = [];
 
         for ($i = 0; $i < 100; $i++) {
 
@@ -43,8 +39,6 @@ class DataFixtures extends Fixture
             $user->setLastName($faker->lastName());
 
             $manager->persist($user);
-            //$userArray[] = $user;
-
             $manager->flush();
         }
 
@@ -78,8 +72,7 @@ class DataFixtures extends Fixture
             $manager->flush();
         }
 
-        for ($i = 0; $i < 10000; $i++)
-        {
+        for ($i = 0; $i < 10000; $i++) {
             $track = new Track();
             $randomer = rand(1, 999);
 
@@ -87,19 +80,17 @@ class DataFixtures extends Fixture
             $track->setAlbum($albumArray[$randomer]);
 
             $manager->persist($track);
-            //$trackArray[] = $track;
             $albumArray = null;
         }
 
-        for ($i = 0; $i < 500; $i++)
-        {
+        for ($i = 0; $i < 500; $i++) {
             $event = new Event();
             $randomer = rand(1, 99);
 
             $event->setArtist($artistArray[$randomer]);
-            $event->setPrice(rand(10,999));
+            $event->setPrice(rand(10, 999));
             $event->setName($faker->realText('50'));
-            $event->setStartDate($faker->dateTimeBetween('now','+2 years'));
+            $event->setStartDate($faker->dateTimeBetween('now', '+2 years'));
             $event->setEndDate($faker->dateTime($event->getStartDate()->add(date_interval_create_from_date_string('5 days'))));
             $event->setCity($faker->city());
 
@@ -108,18 +99,16 @@ class DataFixtures extends Fixture
             $manager->flush();
         }
 
-        for ($i = 0; $i < 250; $i++)
-        {
+        for ($i = 0; $i < 250; $i++) {
             $news = new News();
-            $randomer = rand(1,99);
+            $randomer = rand(1, 99);
 
             $news->setTitle($faker->name('null'));
             $news->setContent($faker->realText(200));
-            $news->setPublishDate($faker->dateTimeBetween('-2 years','now'));
+            $news->setPublishDate($faker->dateTimeBetween('-2 years', 'now'));
             $news->setArtist($artistArray[$randomer]);
 
             $manager->persist($news);
-            //$newsArray[] = $news;
             $manager->flush();
         }
 

@@ -15,8 +15,7 @@ class AlbumType extends AbstractType
             ->add('title')
             ->add('releaseDate')
             ->add('price')
-            ->add('artist')
-        ;
+            ->add('artist');
     }
 
     public function configureOptions(OptionsResolver $resolver)

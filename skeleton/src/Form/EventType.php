@@ -17,8 +17,7 @@ class EventType extends AbstractType
             ->add('endDate')
             ->add('city')
             ->add('price')
-            ->add('artist')
-        ;
+            ->add('artist');
     }
 
     public function configureOptions(OptionsResolver $resolver)

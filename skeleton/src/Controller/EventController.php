@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Event;
 use App\Entity\OrderLog;
-use App\Entity\Orders;
 use App\Entity\User;
 use App\Form\EventType;
 use App\Repository\EventRepository;
@@ -87,7 +86,7 @@ class EventController extends AbstractController
      */
     public function delete(Request $request, Event $event): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$event->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $event->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($event);
             $entityManager->flush();
@@ -101,34 +100,24 @@ class EventController extends AbstractController
      */
     public function buy(Event $event, ObjectManager $manager, EventRepository $eventRepository): Response
     {
-
+        //add an orderlog (command line) containing an instance of the event object bought
         if ($this->getUser() instanceof User) {
             $orderlog = new OrderLog();
-            //$order = new Orders();
 
             $orderlog->setEvent($event);
-            //$orderlog->setOrdernumber($order);
-            //$order->setOrderDate(new \DateTime());
-            //$order->setTotalPrice($event->getPrice());
-            //$order->setUser($this->getUser());
 
             $manager->persist($orderlog);
-            //$manager->persist($order);
             $manager->flush();
 
-            if(isset($_SESSION["shoppingCart"]))
-            {
+            if (isset($_SESSION["shoppingCart"])) {
                 $shoppingCart = $_SESSION["shoppingCart"];
                 $shoppingCart[] = $orderlog;
                 $_SESSION["shoppingCart"] = $shoppingCart;
-            }else{
+            } else {
                 $shoppingCart = [];
                 $shoppingCart[] = $orderlog;
                 $_SESSION["shoppingCart"] = $shoppingCart;
             }
-
-            //$order->setOrderNumber($orderlog->getId());
-            //$manager->flush();
 
             return $this->render('event/index.html.twig', [
                 'event' => $event, 'shoppingcart' => $_SESSION["shoppingCart"], 'events' => $eventRepository->findAll()
