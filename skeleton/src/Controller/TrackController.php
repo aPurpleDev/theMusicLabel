@@ -17,6 +17,8 @@ class TrackController extends AbstractController
 {
     /**
      * @Route("/", name="track_index", methods={"GET"})
+     * @param TrackRepository $trackRepository
+     * @return Response
      */
     public function index(TrackRepository $trackRepository): Response
     {
@@ -27,6 +29,8 @@ class TrackController extends AbstractController
 
     /**
      * @Route("/new", name="track_new", methods={"GET","POST"})
+     * @param Request $request
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -50,6 +54,8 @@ class TrackController extends AbstractController
 
     /**
      * @Route("/{id}", name="track_show", methods={"GET"})
+     * @param Track $track
+     * @return Response
      */
     public function show(Track $track): Response
     {
@@ -60,6 +66,9 @@ class TrackController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="track_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param Track $track
+     * @return Response
      */
     public function edit(Request $request, Track $track): Response
     {
@@ -80,6 +89,9 @@ class TrackController extends AbstractController
 
     /**
      * @Route("/{id}", name="track_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Track $track
+     * @return Response
      */
     public function delete(Request $request, Track $track): Response
     {

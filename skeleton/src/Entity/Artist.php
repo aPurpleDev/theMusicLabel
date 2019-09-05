@@ -62,6 +62,9 @@ class Artist implements SplSubject
      */
     private $subscribers = [];
 
+    /**
+     * Artist constructor.
+     */
     public function __construct()
     {
         $this->albums = new ArrayCollection();
@@ -69,21 +72,34 @@ class Artist implements SplSubject
         $this->events = new ArrayCollection();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
+    /**
+     * @return string|null
+     */
     public function __toString()
     {
         return $this->getName();
     }
 
+    /**
+     * @param string $name
+     * @return Artist
+     */
     public function setName(string $name): self
     {
         $this->name = $name;
@@ -91,11 +107,18 @@ class Artist implements SplSubject
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getCountry(): ?string
     {
         return $this->country;
     }
 
+    /**
+     * @param string $country
+     * @return Artist
+     */
     public function setCountry(string $country): self
     {
         $this->country = $country;
@@ -103,11 +126,18 @@ class Artist implements SplSubject
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getStyle(): ?string
     {
         return $this->style;
     }
 
+    /**
+     * @param string $style
+     * @return Artist
+     */
     public function setStyle(string $style): self
     {
         $this->style = $style;
@@ -115,11 +145,18 @@ class Artist implements SplSubject
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getBio(): ?string
     {
         return $this->bio;
     }
 
+    /**
+     * @param string $bio
+     * @return Artist
+     */
     public function setBio(string $bio): self
     {
         $this->bio = $bio;
@@ -135,6 +172,10 @@ class Artist implements SplSubject
         return $this->albums;
     }
 
+    /**
+     * @param Album $album
+     * @return Artist
+     */
     public function addAlbum(Album $album): self
     {
         if (!$this->albums->contains($album)) {
@@ -145,6 +186,10 @@ class Artist implements SplSubject
         return $this;
     }
 
+    /**
+     * @param Album $album
+     * @return Artist
+     */
     public function removeAlbum(Album $album): self
     {
         if ($this->albums->contains($album)) {
@@ -166,6 +211,10 @@ class Artist implements SplSubject
         return $this->news;
     }
 
+    /**
+     * @param News $news
+     * @return Artist
+     */
     public function addNews(News $news): self
     {
         if (!$this->news->contains($news)) {
@@ -176,6 +225,10 @@ class Artist implements SplSubject
         return $this;
     }
 
+    /**
+     * @param News $news
+     * @return Artist
+     */
     public function removeNews(News $news): self
     {
         if ($this->news->contains($news)) {
@@ -197,6 +250,10 @@ class Artist implements SplSubject
         return $this->events;
     }
 
+    /**
+     * @param Event $event
+     * @return Artist
+     */
     public function addEvent(Event $event): self
     {
         if (!$this->events->contains($event)) {
@@ -207,6 +264,10 @@ class Artist implements SplSubject
         return $this;
     }
 
+    /**
+     * @param Event $event
+     * @return Artist
+     */
     public function removeEvent(Event $event): self
     {
         if ($this->events->contains($event)) {
@@ -220,11 +281,18 @@ class Artist implements SplSubject
         return $this;
     }
 
+    /**
+     * @return array|null
+     */
     public function getSubscribers(): ?array
     {
         return $this->subscribers;
     }
 
+    /**
+     * @param array|null $subscribers
+     * @return Artist
+     */
     public function setSubscribers(?array $subscribers): self
     {
         $this->subscribers = $subscribers;

@@ -13,10 +13,19 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
+/**
+ * Class RegistrationController
+ * @package App\Controller
+ */
 class RegistrationController extends AbstractController
 {
     /**
      * @Route("/register", name="app_register")
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param RegisterListener $listener
+     * @param EventDispatcherInterface $dispatcher
+     * @return Response
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, RegisterListener $listener, EventDispatcherInterface $dispatcher): Response
     {

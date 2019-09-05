@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Event;
 use App\Entity\OrderLog;
-use App\Entity\Orders;
 use App\Entity\User;
 use App\Form\EventType;
 use App\Repository\EventRepository;
@@ -21,6 +20,8 @@ class EventController extends AbstractController
 {
     /**
      * @Route("/", name="event_index", methods={"GET"})
+     * @param EventRepository $eventRepository
+     * @return Response
      */
     public function index(EventRepository $eventRepository): Response
     {
@@ -31,6 +32,8 @@ class EventController extends AbstractController
 
     /**
      * @Route("/new", name="event_new", methods={"GET","POST"})
+     * @param Request $request
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -54,6 +57,8 @@ class EventController extends AbstractController
 
     /**
      * @Route("/{id}", name="event_show", methods={"GET"})
+     * @param Event $event
+     * @return Response
      */
     public function show(Event $event): Response
     {
@@ -64,6 +69,9 @@ class EventController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="event_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param Event $event
+     * @return Response
      */
     public function edit(Request $request, Event $event): Response
     {
@@ -84,6 +92,9 @@ class EventController extends AbstractController
 
     /**
      * @Route("/{id}", name="event_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Event $event
+     * @return Response
      */
     public function delete(Request $request, Event $event): Response
     {
@@ -98,37 +109,34 @@ class EventController extends AbstractController
 
     /**
      * @Route("/{id}/buy", name="event_buy", methods={"GET","POST"})
+     * @param Event $event
+     * @param ObjectManager $manager
+     * @param EventRepository $eventRepository
+     * @return Response
      */
     public function buy(Event $event, ObjectManager $manager, EventRepository $eventRepository): Response
     {
 
         if ($this->getUser() instanceof User) {
-            $orderlog = new OrderLog();
-            //$order = new Orders();
+            $orderLog = new OrderLog();
 
-            $orderlog->setEvent($event);
-            //$orderlog->setOrdernumber($order);
-            //$order->setOrderDate(new \DateTime());
-            //$order->setTotalPrice($event->getPrice());
-            //$order->setUser($this->getUser());
+            $orderLog->setEvent($event);
 
-            $manager->persist($orderlog);
-            //$manager->persist($order);
+
+            $manager->persist($orderLog);
             $manager->flush();
 
             if(isset($_SESSION["shoppingCart"]))
             {
                 $shoppingCart = $_SESSION["shoppingCart"];
-                $shoppingCart[] = $orderlog;
+                $shoppingCart[] = $orderLog;
                 $_SESSION["shoppingCart"] = $shoppingCart;
             }else{
                 $shoppingCart = [];
-                $shoppingCart[] = $orderlog;
+                $shoppingCart[] = $orderLog;
                 $_SESSION["shoppingCart"] = $shoppingCart;
             }
 
-            //$order->setOrderNumber($orderlog->getId());
-            //$manager->flush();
 
             return $this->render('event/index.html.twig', [
                 'event' => $event, 'shoppingcart' => $_SESSION["shoppingCart"], 'events' => $eventRepository->findAll()

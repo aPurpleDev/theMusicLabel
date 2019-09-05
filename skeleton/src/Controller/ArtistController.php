@@ -23,6 +23,8 @@ class ArtistController extends AbstractController
 {
     /**
      * @Route("/", name="artist_index", methods={"GET"})
+     * @param ArtistRepository $artistRepository
+     * @return Response
      */
     public function index(ArtistRepository $artistRepository): Response
     {
@@ -34,6 +36,8 @@ class ArtistController extends AbstractController
 
     /**
      * @Route("/new", name="artist_new", methods={"GET","POST"})
+     * @param Request $request
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -57,6 +61,11 @@ class ArtistController extends AbstractController
 
     /**
      * @Route("/{id}", name="artist_show", methods={"GET", "POST"})
+     * @param Request $request
+     * @param Artist $artist
+     * @param EventDispatcherInterface $dispatcher
+     * @param UserRepository $userRepository
+     * @return Response
      */
     public function show(Request $request, Artist $artist, EventDispatcherInterface $dispatcher, UserRepository $userRepository): Response
     {
@@ -120,6 +129,9 @@ class ArtistController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="artist_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param Artist $artist
+     * @return Response
      */
     public function edit(Request $request, Artist $artist): Response
     {
@@ -140,6 +152,9 @@ class ArtistController extends AbstractController
 
     /**
      * @Route("/{id}", name="artist_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Artist $artist
+     * @return Response
      */
     public function delete(Request $request, Artist $artist): Response
     {

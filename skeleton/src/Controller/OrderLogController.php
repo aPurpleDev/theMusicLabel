@@ -17,6 +17,8 @@ class OrderLogController extends AbstractController
 {
     /**
      * @Route("/", name="order_log_index", methods={"GET"})
+     * @param OrderLogRepository $orderLogRepository
+     * @return Response
      */
     public function index(OrderLogRepository $orderLogRepository): Response
     {
@@ -27,6 +29,8 @@ class OrderLogController extends AbstractController
 
     /**
      * @Route("/new", name="order_log_new", methods={"GET","POST"})
+     * @param Request $request
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -50,6 +54,8 @@ class OrderLogController extends AbstractController
 
     /**
      * @Route("/{id}", name="order_log_show", methods={"GET"})
+     * @param OrderLog $orderLog
+     * @return Response
      */
     public function show(OrderLog $orderLog): Response
     {
@@ -60,6 +66,9 @@ class OrderLogController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="order_log_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param OrderLog $orderLog
+     * @return Response
      */
     public function edit(Request $request, OrderLog $orderLog): Response
     {
@@ -80,6 +89,9 @@ class OrderLogController extends AbstractController
 
     /**
      * @Route("/{id}", name="order_log_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param OrderLog $orderLog
+     * @return Response
      */
     public function delete(Request $request, OrderLog $orderLog): Response
     {

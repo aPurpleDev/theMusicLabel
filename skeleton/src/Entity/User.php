@@ -65,29 +65,48 @@ class User implements UserInterface, SplObserver
      */
     private $subscriptions = [];
 
+    /**
+     * @var string
+     */
     private $adminMail = 'themusic@label.com';
 
 
+    /**
+     * User constructor.
+     */
     public function __construct()
     {
         $this->orders = new ArrayCollection();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return (string) $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
+    /**
+     * @param string $email
+     * @return User
+     */
     public function setEmail(string $email): self
     {
         $this->email = $email;
@@ -117,6 +136,10 @@ class User implements UserInterface, SplObserver
         return array_unique($roles);
     }
 
+    /**
+     * @param array $roles
+     * @return User
+     */
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
@@ -132,6 +155,10 @@ class User implements UserInterface, SplObserver
         return (string) $this->password;
     }
 
+    /**
+     * @param string $password
+     * @return User
+     */
     public function setPassword(string $password): self
     {
         $this->password = $password;
@@ -164,6 +191,10 @@ class User implements UserInterface, SplObserver
         return $this->orders;
     }
 
+    /**
+     * @param Orders $order
+     * @return User
+     */
     public function addOrder(Orders $order): self
     {
         if (!$this->orders->contains($order)) {
@@ -174,6 +205,10 @@ class User implements UserInterface, SplObserver
         return $this;
     }
 
+    /**
+     * @param Orders $order
+     * @return User
+     */
     public function removeOrder(Orders $order): self
     {
         if ($this->orders->contains($order)) {
@@ -187,11 +222,18 @@ class User implements UserInterface, SplObserver
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getFirstName(): ?string
     {
         return $this->firstName;
     }
 
+    /**
+     * @param string $firstName
+     * @return User
+     */
     public function setFirstName(string $firstName): self
     {
         $this->firstName = $firstName;
@@ -199,11 +241,18 @@ class User implements UserInterface, SplObserver
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getLastName(): ?string
     {
         return $this->lastName;
     }
 
+    /**
+     * @param string $lastName
+     * @return User
+     */
     public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
@@ -212,12 +261,18 @@ class User implements UserInterface, SplObserver
     }
 
 
-
+    /**
+     * @return array|null
+     */
     public function getSubscriptions(): ?array
     {
         return $this->subscriptions;
     }
 
+    /**
+     * @param array|null $subscriptions
+     * @return User
+     */
     public function setSubscriptions(?array $subscriptions): self
     {
         $this->subscriptions = $subscriptions;

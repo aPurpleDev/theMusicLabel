@@ -6,8 +6,15 @@ use App\Entity\Artist;
 use App\Entity\User;
 use Symfony\Contracts\EventDispatcher\Event;
 
+/**
+ * Class UnsubEvent
+ * @package App\Event
+ */
 class UnsubEvent extends Event
 {
+    /**
+     *
+     */
     const NAME = 'unsub.add';
 
     /**
@@ -15,6 +22,9 @@ class UnsubEvent extends Event
      */
     private $artist;
 
+    /**
+     * @var User
+     */
     private $user;
 
     /**

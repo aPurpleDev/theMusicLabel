@@ -6,8 +6,15 @@ use App\Entity\Artist;
 use App\Entity\User;
 use Symfony\Contracts\EventDispatcher\Event;
 
+/**
+ * Class SubEvent
+ * @package App\Event
+ */
 class SubEvent extends Event
 {
+    /**
+     *
+     */
     const NAME = 'sub.add';
 
     /**
@@ -15,6 +22,9 @@ class SubEvent extends Event
      */
     private $artist;
 
+    /**
+     * @var User
+     */
     private $user;
 
     /**

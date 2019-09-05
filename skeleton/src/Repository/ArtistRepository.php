@@ -14,11 +14,19 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class ArtistRepository extends ServiceEntityRepository
 {
+    /**
+     * ArtistRepository constructor.
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Artist::class);
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function findSubby($id)
     {
         return $this->createQueryBuilder('a')

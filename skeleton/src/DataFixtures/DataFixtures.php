@@ -12,6 +12,10 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker;
 
+/**
+ * Class DataFixtures
+ * @package App\DataFixtures
+ */
 class DataFixtures extends Fixture
 {
 
@@ -22,6 +26,9 @@ class DataFixtures extends Fixture
     {
     }
 
+    /**
+     * @param ObjectManager $manager
+     */
     public function load(ObjectManager $manager)
     {
         $faker = Faker\Factory::create();

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -37,16 +38,26 @@ class News
      */
     private $artist;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getTitle(): ?string
     {
         return $this->title;
     }
 
+    /**
+     * @param string $title
+     * @return News
+     */
     public function setTitle(string $title): self
     {
         $this->title = $title;
@@ -54,11 +65,18 @@ class News
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getContent(): ?string
     {
         return $this->content;
     }
 
+    /**
+     * @param string $content
+     * @return News
+     */
     public function setContent(string $content): self
     {
         $this->content = $content;
@@ -66,23 +84,37 @@ class News
         return $this;
     }
 
-    public function getPublishDate(): ?\DateTimeInterface
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getPublishDate(): ?DateTimeInterface
     {
         return $this->publishDate;
     }
 
-    public function setPublishDate(\DateTimeInterface $publishDate): self
+    /**
+     * @param DateTimeInterface $publishDate
+     * @return News
+     */
+    public function setPublishDate(DateTimeInterface $publishDate): self
     {
         $this->publishDate = $publishDate;
 
         return $this;
     }
 
+    /**
+     * @return Artist|null
+     */
     public function getArtist(): ?Artist
     {
         return $this->artist;
     }
 
+    /**
+     * @param Artist|null $artist
+     * @return News
+     */
     public function setArtist(?Artist $artist): self
     {
         $this->artist = $artist;

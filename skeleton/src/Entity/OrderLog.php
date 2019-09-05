@@ -31,16 +31,26 @@ class OrderLog
      */
     private $ordernumber;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return Event|null
+     */
     public function getEvent(): ?Event
     {
         return $this->event;
     }
 
+    /**
+     * @param Event|null $event
+     * @return OrderLog
+     */
     public function setEvent(?Event $event): self
     {
         $this->event = $event;
@@ -48,11 +58,18 @@ class OrderLog
         return $this;
     }
 
+    /**
+     * @return Album|null
+     */
     public function getAlbum(): ?Album
     {
         return $this->album;
     }
 
+    /**
+     * @param Album|null $album
+     * @return OrderLog
+     */
     public function setAlbum(?Album $album): self
     {
         $this->album = $album;
@@ -60,11 +77,18 @@ class OrderLog
         return $this;
     }
 
+    /**
+     * @return Orders|null
+     */
     public function getOrdernumber(): ?Orders
     {
         return $this->ordernumber;
     }
 
+    /**
+     * @param Orders|null $ordernumber
+     * @return OrderLog
+     */
     public function setOrdernumber(?Orders $ordernumber): self
     {
         $this->ordernumber = $ordernumber;
@@ -72,6 +96,9 @@ class OrderLog
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         $orderlogcontent = '';

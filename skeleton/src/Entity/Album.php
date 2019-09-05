@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Interfaces\BuyableInterface;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -50,22 +51,35 @@ class Album implements BuyableInterface
      */
     private $orderLogs;
 
+    /**
+     * Album constructor.
+     */
     public function __construct()
     {
         $this->tracks = new ArrayCollection();
         $this->orderLogs = new ArrayCollection();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getTitle(): ?string
     {
         return $this->title;
     }
 
+    /**
+     * @param string $title
+     * @return Album
+     */
     public function setTitle(string $title): self
     {
         $this->title = $title;
@@ -73,23 +87,37 @@ class Album implements BuyableInterface
         return $this;
     }
 
-    public function getReleaseDate(): ?\DateTimeInterface
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getReleaseDate(): ?DateTimeInterface
     {
         return $this->releaseDate;
     }
 
-    public function setReleaseDate(\DateTimeInterface $releaseDate): self
+    /**
+     * @param DateTimeInterface $releaseDate
+     * @return Album
+     */
+    public function setReleaseDate(DateTimeInterface $releaseDate): self
     {
         $this->releaseDate = $releaseDate;
 
         return $this;
     }
 
+    /**
+     * @return float|null
+     */
     public function getPrice(): ?float
     {
         return $this->price;
     }
 
+    /**
+     * @param float $price
+     * @return Album
+     */
     public function setPrice(float $price): self
     {
         $this->price = $price;
@@ -105,6 +133,10 @@ class Album implements BuyableInterface
         return $this->tracks;
     }
 
+    /**
+     * @param Track $track
+     * @return Album
+     */
     public function addTrack(Track $track): self
     {
         if (!$this->tracks->contains($track)) {
@@ -115,6 +147,10 @@ class Album implements BuyableInterface
         return $this;
     }
 
+    /**
+     * @param Track $track
+     * @return Album
+     */
     public function removeTrack(Track $track): self
     {
         if ($this->tracks->contains($track)) {
@@ -128,11 +164,18 @@ class Album implements BuyableInterface
         return $this;
     }
 
+    /**
+     * @return Artist|null
+     */
     public function getArtist(): ?Artist
     {
         return $this->artist;
     }
 
+    /**
+     * @param Artist|null $artist
+     * @return Album
+     */
     public function setArtist(?Artist $artist): self
     {
         $this->artist = $artist;
@@ -148,6 +191,10 @@ class Album implements BuyableInterface
         return $this->orderLogs;
     }
 
+    /**
+     * @param OrderLog $orderLog
+     * @return Album
+     */
     public function addOrderLog(OrderLog $orderLog): self
     {
         if (!$this->orderLogs->contains($orderLog)) {
@@ -158,6 +205,10 @@ class Album implements BuyableInterface
         return $this;
     }
 
+    /**
+     * @param OrderLog $orderLog
+     * @return Album
+     */
     public function removeOrderLog(OrderLog $orderLog): self
     {
         if ($this->orderLogs->contains($orderLog)) {
@@ -171,11 +222,17 @@ class Album implements BuyableInterface
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getBuyableName()
     {
         return $this->getTitle();
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return  'Album title: ' . $this->getTitle() . '.' .

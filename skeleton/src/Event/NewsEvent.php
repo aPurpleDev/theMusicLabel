@@ -5,8 +5,15 @@ namespace App\Event;
 use App\Entity\Artist;
 use Symfony\Contracts\EventDispatcher\Event;
 
+/**
+ * Class NewsEvent
+ * @package App\Event
+ */
 class NewsEvent extends Event
 {
+    /**
+     *
+     */
     const NAME = 'news.add';
 
     /**

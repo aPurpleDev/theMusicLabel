@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Orders;
-use App\Event\OrderEvent;
 use App\Form\OrderType;
 use App\Repository\OrderRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,6 +18,8 @@ class OrdersController extends AbstractController
 {
     /**
      * @Route("/", name="orders_index", methods={"GET"})
+     * @param OrderRepository $orderRepository
+     * @return Response
      */
     public function index(OrderRepository $orderRepository): Response
     {
@@ -30,7 +31,6 @@ class OrdersController extends AbstractController
     /**
      * @Route("/new", name="orders_new", methods={"GET","POST"})
      * @param Request $request
-     * @param EventDispatcherInterface $dispatcher
      * @return Response
      */
     public function new(Request $request): Response
@@ -56,6 +56,8 @@ class OrdersController extends AbstractController
 
     /**
      * @Route("/{id}", name="orders_show", methods={"GET"})
+     * @param Orders $order
+     * @return Response
      */
     public function show(Orders $order): Response
     {
@@ -69,6 +71,9 @@ class OrdersController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="orders_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param Orders $order
+     * @return Response
      */
     public function edit(Request $request, Orders $order): Response
     {
@@ -89,6 +94,9 @@ class OrdersController extends AbstractController
 
     /**
      * @Route("/{id}", name="orders_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Orders $order
+     * @return Response
      */
     public function delete(Request $request, Orders $order): Response
     {

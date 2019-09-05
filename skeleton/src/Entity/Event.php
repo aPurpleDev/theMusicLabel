@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Interfaces\BuyableInterface;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -55,21 +56,34 @@ class Event implements BuyableInterface
      */
     private $orderLogs;
 
+    /**
+     * Event constructor.
+     */
     public function __construct()
     {
         $this->orderLogs = new ArrayCollection();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
+    /**
+     * @param string $name
+     * @return Event
+     */
     public function setName(string $name): self
     {
         $this->name = $name;
@@ -77,35 +91,56 @@ class Event implements BuyableInterface
         return $this;
     }
 
-    public function getStartDate(): ?\DateTimeInterface
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getStartDate(): ?DateTimeInterface
     {
         return $this->startDate;
     }
 
-    public function setStartDate(\DateTimeInterface $startDate): self
+    /**
+     * @param DateTimeInterface $startDate
+     * @return Event
+     */
+    public function setStartDate(DateTimeInterface $startDate): self
     {
         $this->startDate = $startDate;
 
         return $this;
     }
 
-    public function getEndDate(): ?\DateTimeInterface
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getEndDate(): ?DateTimeInterface
     {
         return $this->endDate;
     }
 
-    public function setEndDate(\DateTimeInterface $endDate): self
+    /**
+     * @param DateTimeInterface $endDate
+     * @return Event
+     */
+    public function setEndDate(DateTimeInterface $endDate): self
     {
         $this->endDate = $endDate;
 
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getCity(): ?string
     {
         return $this->city;
     }
 
+    /**
+     * @param string $city
+     * @return Event
+     */
     public function setCity(string $city): self
     {
         $this->city = $city;
@@ -113,11 +148,18 @@ class Event implements BuyableInterface
         return $this;
     }
 
+    /**
+     * @return float|null
+     */
     public function getPrice(): ?float
     {
         return $this->price;
     }
 
+    /**
+     * @param float $price
+     * @return Event
+     */
     public function setPrice(float $price): self
     {
         $this->price = $price;
@@ -125,11 +167,18 @@ class Event implements BuyableInterface
         return $this;
     }
 
+    /**
+     * @return Artist|null
+     */
     public function getArtist(): ?Artist
     {
         return $this->artist;
     }
 
+    /**
+     * @param Artist|null $artist
+     * @return Event
+     */
     public function setArtist(?Artist $artist): self
     {
         $this->artist = $artist;
@@ -145,6 +194,10 @@ class Event implements BuyableInterface
         return $this->orderLogs;
     }
 
+    /**
+     * @param OrderLog $orderLog
+     * @return Event
+     */
     public function addOrderLog(OrderLog $orderLog): self
     {
         if (!$this->orderLogs->contains($orderLog)) {
@@ -155,6 +208,10 @@ class Event implements BuyableInterface
         return $this;
     }
 
+    /**
+     * @param OrderLog $orderLog
+     * @return Event
+     */
     public function removeOrderLog(OrderLog $orderLog): self
     {
         if ($this->orderLogs->contains($orderLog)) {
@@ -168,11 +225,17 @@ class Event implements BuyableInterface
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getBuyableName()
     {
         return $this->getName();
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return  'Event name: ' . $this->getName() . '.' .

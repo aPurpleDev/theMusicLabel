@@ -20,6 +20,8 @@ class NewsController extends AbstractController
 {
     /**
      * @Route("/", name="news_index", methods={"GET"})
+     * @param NewsRepository $newsRepository
+     * @return Response
      */
     public function index(NewsRepository $newsRepository): Response
     {
@@ -32,6 +34,7 @@ class NewsController extends AbstractController
      * @Route("/new", name="news_new", methods={"GET","POST"})
      * @param Request $request
      * @param EventDispatcherInterface $dispatcher
+     * @param ArtistRepository $artistRepository
      * @return Response
      */
     public function new(Request $request, EventDispatcherInterface $dispatcher, ArtistRepository $artistRepository): Response
@@ -61,6 +64,8 @@ class NewsController extends AbstractController
 
     /**
      * @Route("/{id}", name="news_show", methods={"GET"})
+     * @param News $news
+     * @return Response
      */
     public function show(News $news): Response
     {
@@ -71,6 +76,9 @@ class NewsController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="news_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param News $news
+     * @return Response
      */
     public function edit(Request $request, News $news): Response
     {
@@ -91,6 +99,9 @@ class NewsController extends AbstractController
 
     /**
      * @Route("/{id}", name="news_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param News $news
+     * @return Response
      */
     public function delete(Request $request, News $news): Response
     {

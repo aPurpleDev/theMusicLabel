@@ -6,10 +6,20 @@ use App\Entity\Orders;
 use App\Entity\User;
 use Symfony\Contracts\EventDispatcher\Event;
 
+/**
+ * Class OrderEvent
+ * @package App\Event
+ */
 class OrderEvent extends Event
 {
+    /**
+     *
+     */
     const NAME = 'user.order';
 
+    /**
+     * @var Orders
+     */
     private $order;
     /**
      * @var User
@@ -18,7 +28,8 @@ class OrderEvent extends Event
 
     /**
      * OrderEvent constructor.
-     * @param $order
+     * @param Orders $orders
+     * @param User $user
      */
     public function __construct(Orders $orders, User $user)
     {

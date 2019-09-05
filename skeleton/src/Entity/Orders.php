@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -43,21 +44,34 @@ class Orders
      */
     private $User;
 
+    /**
+     * Orders constructor.
+     */
     public function __construct()
     {
         $this->orderLogs = new ArrayCollection();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return int|null
+     */
     public function getOrderNumber(): ?int
     {
         return $this->orderNumber;
     }
 
+    /**
+     * @param int $orderNumber
+     * @return int
+     */
     public function setOrderNumber(int $orderNumber): int
     {
         $this->orderNumber = $orderNumber;
@@ -65,23 +79,37 @@ class Orders
         return $orderNumber;
     }
 
-    public function getOrderDate(): ?\DateTimeInterface
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getOrderDate(): ?DateTimeInterface
     {
         return $this->orderDate;
     }
 
-    public function setOrderDate(\DateTimeInterface $orderDate): self
+    /**
+     * @param DateTimeInterface $orderDate
+     * @return Orders
+     */
+    public function setOrderDate(DateTimeInterface $orderDate): self
     {
         $this->orderDate = $orderDate;
 
         return $this;
     }
 
+    /**
+     * @return float|null
+     */
     public function getTotalPrice(): ?float
     {
         return $this->totalPrice;
     }
 
+    /**
+     * @param float $totalPrice
+     * @return Orders
+     */
     public function setTotalPrice(float $totalPrice): self
     {
         $this->totalPrice = $totalPrice;
@@ -97,6 +125,10 @@ class Orders
         return $this->orderLogs;
     }
 
+    /**
+     * @param OrderLog $orderLog
+     * @return Orders
+     */
     public function addOrderLog(OrderLog $orderLog): self
     {
         if (!$this->orderLogs->contains($orderLog)) {
@@ -107,6 +139,10 @@ class Orders
         return $this;
     }
 
+    /**
+     * @param OrderLog $orderLog
+     * @return Orders
+     */
     public function removeOrderLog(OrderLog $orderLog): self
     {
         if ($this->orderLogs->contains($orderLog)) {
@@ -120,11 +156,18 @@ class Orders
         return $this;
     }
 
+    /**
+     * @return User|null
+     */
     public function getUser(): ?User
     {
         return $this->User;
     }
 
+    /**
+     * @param User|null $User
+     * @return Orders
+     */
     public function setUser(?User $User): self
     {
         $this->User = $User;

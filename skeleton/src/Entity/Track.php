@@ -26,16 +26,26 @@ class Track
      */
     private $album;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getTitle(): ?string
     {
         return $this->title;
     }
 
+    /**
+     * @param string $title
+     * @return Track
+     */
     public function setTitle(string $title): self
     {
         $this->title = $title;
@@ -43,11 +53,18 @@ class Track
         return $this;
     }
 
+    /**
+     * @return Album|null
+     */
     public function getAlbum(): ?Album
     {
         return $this->album;
     }
 
+    /**
+     * @param Album|null $album
+     * @return Track
+     */
     public function setAlbum(?Album $album): self
     {
         $this->album = $album;

@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Album;
 use App\Entity\Orders;
 use App\Entity\User;
 use App\Event\OrderEvent;
@@ -11,6 +10,7 @@ use App\Repository\AlbumRepository;
 use App\Repository\EventRepository;
 use App\Repository\NewsRepository;
 use App\Repository\UserRepository;
+use DateTime;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -60,6 +60,14 @@ class UserController extends AbstractController
 
     /**
      * @Route("/myshoppingcart/pay", name="user_pay", methods={"GET"})
+     * @param ObjectManager $manager
+     * @param NewsRepository $newsRepository
+     * @param EventDispatcherInterface $dispatcher
+     * @param AlbumRepository $albumRepository
+     * @param EventRepository $eventRepository
+     * @param UserRepository $userRepository
+     * @return Response
+     * @throws \Exception
      */
     public function payShoppingCart(ObjectManager $manager, NewsRepository $newsRepository, EventDispatcherInterface $dispatcher, AlbumRepository $albumRepository, EventRepository $eventRepository ,UserRepository $userRepository): Response
     {
@@ -67,7 +75,7 @@ class UserController extends AbstractController
         {
             $order = new Orders();
             $order->setUser($this->getUser());
-            $order->setOrderDate(new \DateTime());
+            $order->setOrderDate(new DateTime());
             $order->setOrderNumber($order->getId() + rand(100,1000000));
             $manager->persist($order);
             $manager->flush();
@@ -120,6 +128,8 @@ class UserController extends AbstractController
 
     /**
      * @Route("/", name="user_index", methods={"GET"})
+     * @param UserRepository $userRepository
+     * @return Response
      */
     public function index(UserRepository $userRepository): Response
     {
@@ -130,6 +140,8 @@ class UserController extends AbstractController
 
     /**
      * @Route("/new", name="user_new", methods={"GET","POST"})
+     * @param Request $request
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -153,6 +165,8 @@ class UserController extends AbstractController
 
     /**
      * @Route("/{id}", name="user_show", methods={"GET"})
+     * @param User $user
+     * @return Response
      */
     public function show(User $user): Response
     {
@@ -163,6 +177,9 @@ class UserController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param User $user
+     * @return Response
      */
     public function edit(Request $request, User $user): Response
     {
@@ -183,6 +200,9 @@ class UserController extends AbstractController
 
     /**
      * @Route("/{id}", name="user_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param User $user
+     * @return Response
      */
     public function delete(Request $request, User $user): Response
     {

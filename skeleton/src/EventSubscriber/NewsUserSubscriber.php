@@ -7,9 +7,16 @@ use App\Event\SubEvent;
 use App\Event\UnsubEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
+/**
+ * Class NewsUserSubscriber
+ * @package App\EventSubscriber
+ */
 class NewsUserSubscriber implements EventSubscriberInterface
 {
 
+    /**
+     * @param SubEvent $subEvent
+     */
     public function sub(SubEvent $subEvent)
     {
         $artist = $subEvent->getArtist();
@@ -19,12 +26,18 @@ class NewsUserSubscriber implements EventSubscriberInterface
         $user->addArtist($artist);
     }
 
+    /**
+     * @param NewsEvent $newsEvent
+     */
     public function sendMailNews(NewsEvent $newsEvent)
     {
         $artist = $newsEvent->getArtist();
         $artist->notify();
     }
 
+    /**
+     * @param UnsubEvent $unsubEvent
+     */
     public function unsub(UnsubEvent $unsubEvent)
     {
         $artist = $unsubEvent->getArtist();

@@ -21,9 +21,11 @@ class RegisterListener
      * @var
      */
     private $adminMail;
+
     /**
      * RegisterListener constructor.
-     * @param $mailer
+     * @param Swift_Mailer $mailer
+     * @param $adminMail
      */
     public function __construct(Swift_Mailer $mailer, $adminMail)
     {

@@ -17,6 +17,10 @@ class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="home", methods={"GET"})
+     * @param NewsRepository $newsRepository
+     * @param AlbumRepository $albumRepository
+     * @param EventRepository $eventRepository
+     * @param UserRepository $userRepository
      * @return Response
      */
     public function index(NewsRepository $newsRepository, AlbumRepository $albumRepository, EventRepository $eventRepository ,UserRepository $userRepository): Response
