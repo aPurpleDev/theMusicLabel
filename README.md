@@ -23,3 +23,7 @@ This MusicLabel App is an e-commerce/news hub for music fans. It contains:
 - Symfony 4.0
 - Faker
 - Bootstrap
+
+# MISC
+
+- The code has comments.
