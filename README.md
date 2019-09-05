@@ -15,7 +15,7 @@ This MusicLabel App is an e-commerce/news hub for music fans. It contains:
 - Registration, login and multi-role user
 - Purchaseable items: Albums and Events (tickets)
 - Cross-site Shopping Cart
-- Email alerts (buy, registration)
+- Email alerts (buy, registration, subscription)
 - Subscribable Artists: News from a subscribed Artist
 
 # Tools & Framework
