@@ -24,6 +24,11 @@ This MusicLabel App is an e-commerce/news hub for music fans. It contains:
 - Faker
 - Bootstrap
 
+# Design Patterns
+MVC - Symfony
+Observer - Event Subscriber
+Decorator - OrderLog taking an abstract Buyable that fits any product sold on the app
+
 # MISC
 
 - The code has comments.
